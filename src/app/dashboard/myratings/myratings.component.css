@@ -1,0 +1,20 @@
+ngb-rating {
+    font-size: 2rem !important;
+}
+
+.star {
+    font-size: 1.5rem;
+    color: #b0c4de;
+}
+
+.filled {
+    color: #ffe91e;
+}
+
+.bad {
+    color: #deb0b0;
+}
+
+.filled.bad {
+    color: #ff1e1e;
+}

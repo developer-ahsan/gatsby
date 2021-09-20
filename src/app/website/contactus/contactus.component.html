@@ -1,0 +1,60 @@
+<section id="body-content" class="body-content">
+    <div class="container">
+        <div class="contact-section">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="inner-area">
+                        <h2 class="inner-heading gold text-uppercase">CUSTOMER SERVICE REPLIES WITHIN ONE BUSINESS DAY</h2>
+                        <p>Comments, Questions, or Feedback can all be left here. We love to hear what you have to say, old sport!
+                        </p>
+                        <p><b>-	The Gatsby Guide</b></p>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-area">
+                        <h2 class="inner-heading green text-uppercase">Contact Us</h2>
+                        <form [formGroup]="contactForm" (ngSubmit)="contactforms()">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputState">First Name </label>
+                                    <input formControlName="f_name" type="text" class="form-control" id="inputAddress" placeholder="Please Enter Your First Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputState">Last Name</label>
+                                    <input formControlName="l_name" type="text" class="form-control" id="inputAddress" placeholder="Please Enter Your Last Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputState">Email* </label>
+                                    <input formControlName="email" type="text" class="form-control" id="inputAddress" placeholder="Please Enter Your Email" [ngClass]="{ 'is-invalid':  f.email.invalid && (f.email.dirty || f.email.touched)  }">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputState">Contact Phone Number</label>
+                                    <!-- <input formControlName="phone" inputmode="numeric" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="inputAddress" placeholder="+120332-23232"> -->
+                                    <input formControlName="phone" inputmode="numeric" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" ng2TelInput />
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputState">Subject </label>
+                                    <input formControlName="subject" type="text" class="form-control" id="inputAddress" placeholder="Please enter your subject here">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputState">Message* </label>
+                                    <textarea formControlName="message" required type="text" class="form-control" id="inputAddress" placeholder="Please enter your message here"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="contactForm.invalid">Submit</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

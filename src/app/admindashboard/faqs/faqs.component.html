@@ -1,0 +1,89 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12" *ngIf="faqs">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Faqs</h6>
+                    <p class="m-0 font-weight-bold"><a class="btn btn-success btn-sm" style="color: white;" data-toggle="modal" data-target="#faqs">Add New</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let faq of faqs; let j=index">
+                                <td>{{faq.ques}}</td>
+                                <td>
+                                    {{faq.answer}}
+                                </td>
+                                <td class="d-sm-flex justify-content">
+                                    <a class="btn btn-danger btn-sm marginRight" style="color: white;" (click)="delFaqs(faq.id)"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-primary btn-sm" style="color: white;" (click)="editFaqsModal(faq.id, j)"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal SellNow-->
+<div id="faqs" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Faqs</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addFaqs" (ngSubmit)="addFaqsSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Question</label>
+                        <textarea class="form-control" placeholder="Add Question" formControlName="question"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Answer</label>
+                        <angular-editor id="editor1" formControlName="answer"></angular-editor>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addFaqs.invalid">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="updateFaqs" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Faqs</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addFaqs" (ngSubmit)="updateFaqsSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Question</label>
+                        <textarea class="form-control" placeholder="Add Question" formControlName="question"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Answer</label>
+                        <angular-editor id="editor1" formControlName="answer"></angular-editor>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addFaqs.invalid">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner></ngx-spinner>

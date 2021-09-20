@@ -1,0 +1,339 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header text-small white">
+                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#addProductFile">Bulk Products</a>
+                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#addProduct" style="margin-left: 10px;">Add New Product</a>
+                    <a class="btn btn-danger" href="https://genxsmedia.com/gatsbybackend/public/BulkUploadTemplate_GatsbyGuide.xlsx" target="_blank" style="margin-left: 10px;">Download Sample File</a>
+                </div>
+                <div class="card-body" *ngIf="products">
+                    <!-- update -->
+                    <!-- update -->
+                    <table [dtOptions]="dtOptions" datatable class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <!-- update -->
+                                <th class='notexport'>
+                                    Check
+                                </th>
+                                <!-- update -->
+                                <th>ID</th>
+                                <th class='notexport' hidden>ID</th>
+                                <th>Image</th>
+                                <th>Category</th>
+                                <th>Brand</th>
+                                <th>Product Name</th>
+                                <th>MSRP</th>
+                                <th>Market Value</th>
+                                <th>Variation from MSRP</th>
+                                <th>UPC</th>
+                                <th>Ref#</th>
+                                <th>Size</th>
+                                <th>Year</th>
+                                <th>Added Date</th>
+                                <th># Rating</th>
+                                <th class='notexport'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of products; let j=index">
+                                <!-- update -->
+                                <td>
+
+                                </td>
+                                <!-- update -->
+                                <td>{{product.productID}}</td>
+                                <td hidden>{{product.id}}</td>
+                                <td>
+                                    <img src="{{api.imageUrl + product.image}}" style="height:40px;width:40px; object-fit: contain;">
+                                </td>
+                                <td>{{product.category}}</td>
+                                <td>{{product.brand}}</td>
+                                <td>{{product.name}}</td>
+                                <td>{{product.msrp | currency}}</td>
+                                <td>{{product.market_value | currency}}</td>
+                                <td>{{product.variation}}</td>
+                                <td>{{product.upc}}</td>
+                                <td>{{product.ref}}</td>
+                                <td>{{product.size}}</td>
+                                <td>{{product.year}}</td>
+                                <td>{{product.created_at | date: 'MM-dd-yyyy'}}</td>
+                                <td>
+                                    <a style="color: blue;" (click)="getRatings(product.id)">{{product.rating_count}}</a>
+                                </td>
+                                <td>
+                                    <div class="d-sm-flex align-items-center justify-content-between">
+                                        <a (click)="getProductById(product.id)"><button title="Edit" class="marginRight btn btn-primary fa fa-edit"></button></a>
+                                        <a><button title="Delete" class="btn btn-danger fa fa-trash-alt" (click)="delProduct(product.id, j)"></button></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sin Up -->
+<div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="sign-upLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sign-inLabel">Add New Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="sign-login-form">
+                    <form [formGroup]="addProductForm" (ngSubmit)="addProduct()">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="email-login" class="sr-only">Image</label>
+                                <input formControlName="image" (change)="onFileChange($event, 'plast')" type="file" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">ProductID</label>
+                                <input formControlName="prod_id" type="text" class="form-control" placeholder="Product ID">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Category</label>
+                                <select class="form-control" #mySelect formControlName="category" (change)="ChangeValue(mySelect.value)">
+                                    <option *ngFor="let item of category" value="{{item.id}}">{{item.category}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Brand</label>
+                                <select class="form-control" formControlName="brand">
+                                    <option  *ngFor="let item of brand" value="{{item.model}}">{{item.model}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Product Name</label>
+                                <input formControlName="name" type="text" class="form-control" placeholder="Product Name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">MSRP</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input formControlName="msrp" type="number" class="form-control" placeholder="MSRP">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Market Value</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input formControlName="market_value" type="number" class="form-control" placeholder="Market Value">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">UPC</label>
+                                <input formControlName="upc" type="text" class="form-control" placeholder="UPC">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Ref#</label>
+                                <input formControlName="ref" type="text" class="form-control" placeholder="Ref#">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Size</label>
+                                <input formControlName="size" type="text" class="form-control" placeholder="size">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Year</label>
+                                <input formControlName="year" type="text" class="form-control" placeholder="Year">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Other 1</label>
+                                <input formControlName="other1" type="text" class="form-control" placeholder="Other 1">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Other 2</label>
+                                <input formControlName="other2" type="text" class="form-control" placeholder="Other 2">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Other 3</label>
+                                <input formControlName="other3" type="text" class="form-control" placeholder="Other 3">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block" type="submit" [disabled]="addProductForm.invalid">Add Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="updateProduct" tabindex="-1" aria-labelledby="sign-upLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sign-inLabel">Add New Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="sign-login-form">
+                    <form [formGroup]="addProductForm" (ngSubmit)="updateProduct()">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="email-login" class="sr-only">Image</label>
+                                <input formControlName="image" (change)="onFileChange($event, 'plast')" type="file" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">ProductID</label>
+                                <input formControlName="prod_id" type="text" class="form-control" placeholder="Product ID">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Category</label>
+                                <input formControlName="category" readonly type="text" class="form-control" placeholder="Category">
+
+                                <!-- <select class="form-control" #mySelect formControlName="category" (change)="ChangeValue(mySelect.value)">
+                                    <option *ngFor="let item of category" value="{{item.id}}">{{item.category}}</option>
+                                </select> -->
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Brand</label>
+                                <input formControlName="brand" readonly type="text" class="form-control" placeholder="Brand">
+
+                                <!-- <select class="form-control" formControlName="brand">
+                                    <option  *ngFor="let item of brand" value="{{item.model}}">{{item.model}}</option>
+                                </select> -->
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Product Name</label>
+                                <input formControlName="name" type="text" class="form-control" placeholder="Product Name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">MSRP</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input formControlName="msrp" type="number" class="form-control" placeholder="MSRP">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Market Value</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input formControlName="market_value" type="text" class="form-control" placeholder="Market Value">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">UPC</label>
+                                <input formControlName="upc" type="text" class="form-control" placeholder="UPC">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Ref#</label>
+                                <input formControlName="ref" type="text" class="form-control" placeholder="Ref#">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Size</label>
+                                <input formControlName="size" type="text" class="form-control" placeholder="size">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Year</label>
+                                <input formControlName="year" type="text" class="form-control" placeholder="Year">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Other 1</label>
+                                <input formControlName="other1" type="text" class="form-control" placeholder="Other 1">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Other 2</label>
+                                <input formControlName="other2" type="text" class="form-control" placeholder="Other 2">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Other 3</label>
+                                <input formControlName="other3" type="text" class="form-control" placeholder="Other 3">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block" type="submit" [disabled]="addProductForm.invalid">Update Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delproduct" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Product</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteProduct()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="addProductFile" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Bulk Products</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="bulkProductForm" (ngSubmit)="uploadProducts()">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="email-login" class="sr-only">Excel Sheet</label>
+                            <input accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" formControlName="excel" (change)="onFileChange($event, '')" type="file" class="form-control">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-lg btn-block" type="submit" [disabled]="bulkProductForm.invalid">Upload File</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="productRating" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ratings</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" *ngIf="ratings">
+                <table class="table table-bordered table-responsive">
+                    <tr>
+                        <th>Added By</th>
+                        <th>Overall Score</th>
+                        <th>Appearance Score</th>
+                        <th>Prestige Score</th>
+                        <th>Uniqueness Score</th>
+                        <th>Value Score</th>
+                        <th>Date</th>
+                    </tr>
+                    <tbody>
+                        <tr *ngFor="let item of ratings">
+                            <td>{{item.users.f_name + ' ' + item.users.l_name}}</td>
+                            <td>{{item.overall}}</td>
+                            <td>{{item.appearance}}</td>
+                            <td>{{item.prestige}}</td>
+                            <td>{{item.uniueness}}</td>
+                            <td>{{item.value}}</td>
+                            <td>{{item.created_at | date: 'MM-d-yyyy'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

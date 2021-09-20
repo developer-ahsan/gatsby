@@ -1,0 +1,61 @@
+<div class="container-fluid">
+    <div class="row" *ngIf="submitted">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-body d-none d-sm-block">
+                    <table datatable class=" table table-bordered hover" id="dataTable" [dtOptions]="dtOptions" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Date Submitted</th>
+                                <th>Product Name</th>
+                                <th>Price Submitted</th>
+                                <th>MSRP</th>
+                                <th>MSRP Price Premium</th>
+                                <th>Store Name</th>
+                                <th>Store Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of submitted; let j=index">
+                                <td>{{item.created_at | date:'MM-d-yyyy'}}</td>
+                                <td>{{item.model}}</td>
+                                <td>${{item.price_you_saw}}</td>
+                                <td>${{item.msrp}}</td>
+                                <td>{{msprPremium(item.price_you_saw,item.msrp)}}%</td>
+                                <td>{{item.store_name}}</td>
+                                <td>{{item.store_address}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-body d-block d-sm-none">
+                    <table datatable class=" table table-bordered hover table-responsive" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Date Submitted</th>
+                                <th>Product Name</th>
+                                <th>Price Submitted</th>
+                                <th>MSRP</th>
+                                <th>MSRP Price Premium</th>
+                                <th>Store Name</th>
+                                <th>Store Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of submitted; let j=index">
+                                <td>{{api.dateFormat(item.created_at)}}</td>
+                                <td>{{item.model}}</td>
+                                <td>${{item.price_you_saw}}</td>
+                                <td>${{item.msrp}}</td>
+                                <td>{{msprPremium(item.price_you_saw,item.msrp)}}%</td>
+                                <td>{{item.store_name}}</td>
+                                <td>{{item.store_address}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

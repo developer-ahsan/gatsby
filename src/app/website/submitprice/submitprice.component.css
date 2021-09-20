@@ -1,0 +1,11 @@
+/* update */
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #aa8a31;
+}
+
+
+/* update */

@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12" *ngIf="contacts">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Contacts Requests</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <table [dtOptions]="dtOptions" datatable class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Check</th>
+                                <th hidden>ID</th>
+                                <th>Date Submitted</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let faq of contacts; let j=index">
+                                <td></td>
+                                <td hidden>{{faq.id}}</td>
+                                <td>{{faq.created_at | date:'MM/dd/yyyy'}}</td>
+                                <td>{{faq.f_name + ' ' + faq.l_name}}</td>
+                                <td>
+                                    {{faq.email}}
+                                </td>
+                                <td>
+                                    {{faq.phone}}
+                                </td>
+                                <td>
+                                    {{faq.subject}}
+                                </td>
+                                <td>
+                                    {{faq.message}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delCustomer" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Newsletter</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteCustomer()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

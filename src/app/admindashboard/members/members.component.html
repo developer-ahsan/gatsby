@@ -1,0 +1,151 @@
+<div class="container-fluid">
+    <div class="row" *ngIf="customers">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <!-- <div class="card-header text-small white"><a class="btn btn-success">Export to Excel</a></div> -->
+                <div class="card-body">
+                    <!-- update -->
+                    <div class="row mb-2">
+                        <div class="col-4 wrapper">
+                            <label>Start Date*</label>
+                            <input class="form-control" readonly (click)="d.toggle()" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="startDate" ngbDatepicker #d="ngbDatepicker">
+                            <!-- <input class="form-control start" type="date" name="start" [(ngModel)]="startDate"> -->
+                        </div>
+                        <div class="col-4 wrapper">
+                            <label>End Date*</label>
+                            <input class="form-control" readonly (click)="d1.toggle()" placeholder="yyyy-mm-dd" name="dp1" [(ngModel)]="endDate" ngbDatepicker #d1="ngbDatepicker">
+                            <!-- <input class="form-control" name="end" type="date" [(ngModel)]="endDate"> -->
+                        </div>
+                        <div class="col-4" style="margin-top: 30px;">
+                            <button class="btn btn-primary mr-2" (click)="FilterByDate()">Filter By Date</button>
+                            <button class="btn btn-danger" (click)="getSubmittedPrices()">Reset</button>
+                        </div>
+                    </div>
+                    <!-- <div class="export">
+                        <input type="button" class="dt-button buttons-copy buttons-html5" (click)="exportCsv('csvBtn')" value="CSV">
+                        <input type="button" class="dt-button buttons-copy buttons-html5" (click)="exportCsv('xlsxBtn')" value="EXCEL">
+                        <a class="btn btn-danger btn-sm" *ngIf="this.checkedList.length !== 0" (click)="delSelectedItem()"><i class="fa fa-trash white"> Delete Selected List</i></a>
+                    </div> -->
+                    <!-- update -->
+                    <table [dtOptions]="dtOptions" datatable class="table table-responsive table-bordered" id="dataTable" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <!-- update -->
+                                <th class='notexport'>
+                                    Check
+                                </th>
+                                <!-- <th>
+                                    <div class="form-check">
+                                        <label>
+                                            <input style="margin: -10px -18px" type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"/>
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </th> -->
+                                <!-- update -->
+                                <th>Date SignUp</th>
+                                <th hidden class='notexport'>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Prices Submitted</th>
+                                <th>Location</th>
+                                <th>NOI in Collection</th>
+                                <th>Total Value of Items in Collection</th>
+                                <th class='notexport'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of customers; let j=index">
+                                <!-- update -->
+                                <td>
+                                </td>
+                                <!-- update -->
+                                <td>{{item.created_at | date:'MM-dd-yyyy'}}</td>
+                                <td hidden>{{item.id}}</td>
+                                <td>{{item.f_name}}</td>
+                                <td>{{ item.l_name}}</td>
+                                <td>{{item.user_details?.username ? item.user_details.username : 'NULL '}}</td>
+                                <td>{{item.email}}</td>
+                                <td>{{item.user_details?.phone ? item.user_details.phone : 'NULL '}}</td>
+                                <td>{{item.submit_price_count}}</td>
+                                <td>{{item.user_details?.address ? item.user_details.address : 'NULL '}}</td>
+                                <td>{{item.collection_count}}</td>
+                                <td>{{item.collection_Sum | currency}}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm marginRight" (click)="loginasCustomer(j)" href="javascript:void(0)" target="_blank">Login as</button>
+                                    <button class="btn btn-danger btn-sm mr-2" (click)="delCustomer(item.id, j)"><i class="fa fa-trash white"></i></button>
+                                    <button class="btn btn-success btn-sm" (click)="updateCustomerModal(item)"><i class="fa fa-edit white"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delCustomer" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Customer</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteCustomer()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="updateCustomerModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Members Record</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="customerForm" (ngSubmit)="updateCustomerRecord()">
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="inputAddress">* First Name</label>
+                            <input class="form-control" type="text" formControlName="f_name">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="inputAddress">* Last Name</label>
+                            <input class="form-control" type="text" formControlName="l_name">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="inputAddress">* Email</label>
+                            <input class="form-control" type="text" formControlName="email" readonly>
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="inputAddress">Username</label>
+                            <input class="form-control" type="text" formControlName="username">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="inputAddress">Phone</label>
+                            <input class="form-control" type="number" formControlName="phone">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="inputAddress">Address</label>
+                            <input class="form-control" type="text" formControlName="address">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="customerForm.invalid">Update Member</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

@@ -1,0 +1,129 @@
+/* update */
+.dropdown-item:hover, .dropdown-item:focus {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #aa8a31;
+}
+/* update */
+.card {
+    position: relative;
+    border: solid 1px #212121;
+    padding: 45px 50px 25px 60px;
+    margin-top: 200px;
+    background-color: #212121;
+    border-radius: 10px;
+    color: #fff
+}
+
+.post-txt {
+    font-size: 20px;
+    margin-bottom: 0
+}
+
+.quote-img {
+    position: absolute;
+    top: 32px;
+    left: 25px;
+    width: 30px;
+    height: 30px
+}
+
+.nice-img {
+    width: 20px;
+    height: 25px;
+    margin-bottom: 7px
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 20px solid #212121;
+    margin-left: 85px
+}
+
+.fit-image {
+    width: 100%;
+    object-fit: cover
+}
+
+.profile-pic {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    left: 65px;
+    margin-top: 15px
+}
+
+.profile-name {
+    position: absolute;
+    font-size: 22px;
+    margin-top: 60px;
+    left: 210px;
+    color: #616161
+}
+
+#quote-carousel {
+    padding: 0 10px 30px 10px;
+    margin-top: 60px;
+}
+
+#quote-carousel .carousel-control {
+    background: none;
+    color: #CACACA;
+    font-size: 2.3em;
+    text-shadow: none;
+    margin-top: 30px;
+}
+
+#quote-carousel .carousel-indicators {
+    position: relative;
+    right: 50%;
+    top: auto;
+    bottom: 0px;
+    margin-top: 20px;
+    margin-right: -19px;
+}
+
+#quote-carousel .carousel-indicators li {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    opacity: 0.4;
+    overflow: hidden;
+    transition: all .4s ease-in;
+    vertical-align: middle;
+}
+
+#quote-carousel .carousel-indicators .active {
+    width: 128px;
+    height: 128px;
+    opacity: 1;
+    transition: all .2s;
+}
+
+.item blockquote {
+    border-left: none;
+    margin: 0;
+}
+
+.item blockquote p:before {
+    content: "f10d";
+    font-family: 'Fontawesome';
+    float: left;
+    margin-right: 10px;
+}
+
+input {
+    margin: 0px !important;
+}
+
+
+/* .search .custom-select {
+    height: calc(1.5em + 0.95rem + 7px);
+} */

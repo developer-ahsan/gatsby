@@ -1,0 +1,119 @@
+<div class="container-fluid">
+    <div class="row" *ngIf="stores">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <!-- <div class="card-header text-small white"><a class="btn btn-success">Export to Excel</a></div> -->
+                <div class="card-body">
+                    <!-- update -->
+                    <!-- update -->
+                    <table datatable class="table table-bordered" id="dataTable" [dtOptions]="dtOptions" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <!-- update -->
+                                <th class='notexport'>
+                                    Check
+                                </th>
+                                <!-- update -->
+                                <th>Date Added</th>
+                                <th hidden class='notexport'>ID</th>
+                                <th>Store Name</th>
+                                <th>Store Address</th>
+                                <th>No. of Submissions</th>
+                                <th class='notexport'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of stores; let j=index">
+                                <!-- update -->
+                                <td>
+
+                                </td>
+                                <!-- update -->
+                                <td>{{item.created_at | date: 'MM-dd-yyyy'}}</td>
+                                <td hidden>{{item.id}}</td>
+
+                                <td>{{item.store_name}}</td>
+                                <td>{{item.store_address}}</td>
+                                <td><a href="javascript:void(0)" (click)="showModal(item.products)">{{item.submissions}}</a></td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" (click)="delItem(item.id, j)"><i class="fa fa-trash white"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- update -->
+<div id="delItem" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Requested Price</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteItem()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- update -->
+<div [style.display]="showModal1 ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Submitted Prices ({{store_name}})</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hideModal()">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <table class="table table-bordered hover" id="dataTablesss" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Date Submitted</th>
+                            <th>Submitted By</th>
+                            <th>Image</th>
+                            <th>Product Name</th>
+                            <th>Price Submitted</th>
+                            <th>MSRP</th>
+                            <th>MSRP Price Premium</th>
+                            <th>Store Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of priceModalData | paginate: { id: 'listing_pagination',
+                        itemsPerPage: 3,
+                        currentPage: page,
+                        totalItems: totalRec }; let j=index">
+                            <td>{{item.created_at | date:'MM-dd-yyyy'}}</td>
+                            <td>
+                                {{item?.user.f_name + ' ' + item?.user.l_name}}
+                            </td>
+                            <td>
+                                <img src="{{api.imageUrl + item.image}}" width="30px" alt="">
+                            </td>
+                            <td>{{item.model}}</td>
+                            <td>{{item.price_you_saw | currency}}</td>
+                            <td>{{item.msrp | currency}}</td>
+                            <td>{{msprPremium(item.price_you_saw,item.msrp)}}%</td>
+                            <td>{{item.store_name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="hideModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

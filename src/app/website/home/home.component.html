@@ -1,0 +1,275 @@
+<section id="header-area" class="home-body" style="min-height: 200px;">
+    <div class="header-carousel myKenburns">
+        <div class="contenet-image">
+            <div class="container" *ngIf="banners">
+                <div class="row justify-content-center text-center">
+                    <div class="col-md-7">
+                        <h1 class="hero__main">The Gatsby Guide</h1>
+                        <h2 class="hero__title">Everything a modern-day Gatsby might find in his collection</h2>
+                        <div class="search-area">
+                            <h3 class="hero__title2">THE GATSBY GUIDE HELPS YOU <span>COMPARE MARKET PRICING VS MSRP PRICING DATA</span> TO SEE WHAT YOUR COLLECTION’S WORTH</h3>
+                            <div class="search">
+                                <div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-7 dropdown" *ngIf="searchSelect=='name'" style="margin: 0px;padding: 0px; margin-top: 7px;">
+                                            <input type="text" autocomplete="off" name="das" [(value)]="productName" [(ngModel)]="ngSearch" data-toggle="dropdown" (keyup)="getSearchProducts($event.target.value)" class="form-control" placeholder="Search to find a price" aria-label="Search to find a price"
+                                                aria-describedby="button-addon2">
+                                            <div class="dropdown-menu" [ngStyle]="{'height': searchProducts.length > 0 ? '100px' : 'auto','display': searchProducts.length > 0 ? 'block': 'none' }" style="background-color: white; width: 100%;height: 100px;overflow-y:auto; text-align: left;padding: 5px 10px;">
+                                                <a href="javascript:void(0)" class="dropdown-item" *ngFor="let item of searchProducts" (keyup)="getProductName(item.name)" (click)="setSearchValue(item.slug)" [routerLink]="['productdetails', item.cat_slug, item.slug]">{{item.brand}} {{item.name}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7" *ngIf="searchSelect=='ref'" style="margin: 0px;padding: 0px;">
+                                            <ngx-autocomplete style="width: 100%;padding: 0px !important;margin: 0px !important; float: left;" [searchKeyword]="'ref'" [inputId]="'searchEmployee'" [placeholderValue]="'Search by Reference Nu,er'" [entries]="category" (selectedValue)="selectEvent($event)">
+                                            </ngx-autocomplete>
+                                        </div>
+                                        <div class="col-md-7" *ngIf="searchSelect=='upc'" style="margin: 0px;padding: 0px;">
+                                            <ngx-autocomplete style="width: 100%;padding: 0px !important;margin: 0px !important; float: left;" [searchKeyword]="'upc'" [inputId]="'searchEmployee'" [placeholderValue]="'Search by UPC'" [entries]="brand" (selectedValue)="selectEvent($event)">
+                                            </ngx-autocomplete>
+                                        </div>
+                                        <div class="col-md-3" style="margin: 0px;padding: 0px;margin-top: 7px;">
+                                            <button (click)="searchProduct()" style="width: 100%;" class="btn btn-primary rounded-0 text-uppercase btn-sm" type="button" id="button-addon2">Search Now</button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="search">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <select class="custom-select" id="inputGroupSelect01">
+                                      <option selected>Choose...</option>
+                                      <option value="1">One</option>
+                                      <option value="2">Two</option>
+                                      <option value="3">Three</option>
+                                    </select>
+                                    </div>
+                                    <ngx-autocomplete style="width: 60%;padding: 0px !important;margin: 0px !important; float: left;" [searchKeyword]="'name'" [inputId]="'searchEmployee'" [placeholderValue]="'Search by Model to get pricing'" [entries]="allProducts" (selectedValue)="selectEvent($event)">
+                                    </ngx-autocomplete>
+                                    <input type="text" class="form-control" placeholder="Search by UPC, Reference Number or Model to get pricing" aria-label="Search by UPC, Reference Number or Model to get pricing" aria-describedby="button-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary rounded-0 text-uppercase" type="button" id="button-addon2">Search Now</button>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="one-time hero--homepage carousel kb_elastic animate_text" id="kb" *ngIf="banners">
+            <div class="slick-s">
+                <div class="hero__overlay"></div>
+                <ngb-carousel>
+                    <ng-template ngbSlide *ngFor="let item of banners">
+                        <div class="hero-image" [ngStyle]="{'background': 'url(' + api.imageUrl + item.image + ')'}">
+                        </div>
+                    </ng-template>
+                </ngb-carousel>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section id="body-content" class="body-content text-center" *ngIf="products">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content-area">
+                    <h2 class="green text-uppercase">Most Popular Searches This Month</h2>
+                    <ul>
+                        <li *ngFor="let product of products">
+                            <a [routerLink]="['productdetails', product.cat_slug, product.slug]">
+                                <div class="popular-area">
+                                    <div class="category-name">{{product.category}}</div>
+                                    <div class="img-area">
+                                        <img style="height:120px;width:120px; object-fit: contain;" src="{{api.imageUrl + product.image}}" /></div>
+                                    <div class="category-brand">{{product.brand}}</div>
+                                    <div class="name">{{product.name}}</div>
+                                    <div class="price">{{product.market_value | currency}}</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<section class="inventory-area" *ngIf="sell">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-xs col-md col-sm left-inventory">
+                <div class="inventory-img"><img src="{{api.imageUrl + sell.image}}" /></div>
+            </div>
+            <div class="col-xs col-md col-sm right-inventory">
+                <div class="content-inventory">
+                    <h2 class="heading">Looking to Sell Your Collection?</h2>
+                    <p>We can connect you with an Instant Quote</p>
+                    <a class="btn btn-primary btn-lg" style="color: white;" data-toggle="modal" data-target="#sell-now">Click to Sell Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <div class="row justify-content-center">
+    <div class=" col-sm-11 col-md-9 col-lg-8 col-xl-7">
+        <div class="card">
+            <p class="post"> <span><img class="quote-img" src="https://i.imgur.com/i06xx2I.png"></span> <span class="post-txt">I upgraded my Dribble account to the Pro version. Absolutely loving the super clean look of the Playbook feature </span> <span><img class="nice-img" src="https://i.imgur.com/l5AkSHd.png"></span> </p>
+        </div>
+        <div class="arrow-down"></div>
+        <div class="row d-flex justify-content-center">
+            <div class=""> <img class="profile-pic fit-image" src="https://i.imgur.com/RCwPA3O.jpg"> </div>
+            <p class="profile-name">Anne Snow</p>
+        </div>
+    </div>
+</div> -->
+
+<section class="grading-carousel-area" *ngIf="testimonial">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-7">
+                <h2 class="carousel-heading">What other ENTHUSIASTS are Saying</h2>
+                <div class="carousel-area">
+                    <div class="">
+                        <div class="item">
+                            <ngb-carousel [showNavigationArrows]="false" [showNavigationIndicators]="false">
+                                <ng-template ngbSlide *ngFor="let item of testimonial">
+                                    <p>{{item.text}}</p>
+                                </ng-template>
+                            </ngb-carousel>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Sell Now Modal area -->
+<div class="modal fade bd-example-modal-lg" id="sell-now" tabindex="-1" role="dialog" aria-labelledby="sell-now" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-header-sell"><img src="./assets/web/images/looking-sell-banner.jpg" />
+                <div class="content-sell">
+                    <h3>Looking to Sell Your Collection?</h3>
+                    <p>FILL IN THE FORM BELOW AND SEND</p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="sell-item-area">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-9">
+                                <form [formGroup]="sellCollectionForm" (ngSubmit)="sellNow()">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputEmail4">* First Name</label>
+                                            <input formControlName="f_name" type="text" class="form-control" placeholder="Please enter your first name">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputPassword4">* Last Name</label>
+                                            <input formControlName="l_name" type="text" class="form-control" placeholder="Please enter your last name">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputEmail4">*Email</label>
+                                            <input formControlName="email" type="email" class="form-control" placeholder="Please enter your email address">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputPassword4">Contact Phone Number</label>
+                                            <input formControlName="phone" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" ng2TelInput inputmode="numeric" />
+
+                                            <!-- <input formControlName="phone" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" placeholder="+1-202-555-0171"> -->
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <h4>Interested in Selling</h4>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="password-confirm">Category</label>
+                                                <select class="form-control" #mySelect formControlName="category" (change)="ChangeValue(mySelect.value)">
+                                                    <option selected disabled value="">Select Category</option>
+                                    <option *ngFor="let item of category" value="{{item.id}}">{{item.category}}</option>
+                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="password-confirm">Brand</label>
+                                            <select class="form-control" formControlName="brand">
+                                                <option disabled value="">Select Brand</option>
+                                    <option  *ngFor="let item of brand" value="{{item.model}}">{{item.model}}</option>
+                                </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">* Model </label>
+                                            <input class="form-control" type="text" formControlName="model" placeholder="Model">
+
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputCity">Year</label>
+                                            <!-- <input class="form-control" readonly (click)="d.toggle()" placeholder="yyyy-mm-dd" name="dp" formControlName="year" ngbDatepicker #d="ngbDatepicker"> -->
+                                            <select ormControlName="year" class="form-control">
+                                                <option *ngFor="let year of range" value="{{year}}">{{year}}</option>
+                                            </select>
+                                            <!-- <input class="form-control" type="text" formControlName="year" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="(e.g) 2020"> -->
+
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Serial Number / UPC</label>
+                                            <input class="form-control" type="text" formControlName="upc" placeholder="Serial number / UPC">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">Expected Value </label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">$</span>
+                                                </div>
+                                                <input inputmode="numeric" onkeypress="return event.charCode >= 43 && event.charCode <= 57" min="1" formControlName="value" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Expected Value" (focus)="numberFormat($event.target.value,'value')"
+                                                    (blur)="thousandFormator($event.target.value,'value')">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="inputState">* Quantity</label>
+                                            <input inputmode="numeric" onkeypress="return event.charCode >= 48 && event.charCode <= 57" min="1" class="form-control" type="number" formControlName="quantity" placeholder="Quantity">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputAddress">Location </label>
+                                        <input ngx-google-places-autocomplete [options]='options' #placessRef="ngx-places" (onAddressChange)="handleAddressChange($event)" formControlName="location" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" (input)="inputChange($event)">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Details</label>
+                                        <textarea formControlName="detail" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Describe the general contents of your collection and if you have proof of purchase for authenticity"></textarea>
+                                    </div>
+                                    <button [disabled]="sellCollectionForm.invalid" type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

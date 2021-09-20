@@ -1,0 +1,317 @@
+<div class="container-fluid">
+    <div class="row" *ngIf="collections">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header text-small font-weight-bold text-uppercase black" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Update Your Gatsby Guide Collection</div>
+                <div class="card-body d-none d-sm-block">
+                    <table [dtOptions]="dtOptions" class="table table-bordered table-responsive" datatable id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Brand</th>
+                                <th class='notexport'>Product Detail</th>
+                                <th>Product Name</th>
+                                <th>#Ref</th>
+                                <th>UPC</th>
+                                <th>Year</th>
+                                <th>MSRP</th>
+                                <th>Secondary Value</th>
+                                <th class='notexport'>Quantity</th>
+                                <th style="background-color: #dff3c9 ;">Total Market Value</th>
+                                <th>Added On</th>
+                                <th class='notexport'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of collections; let j = index">
+                                <td>{{item.product.category}}</td>
+                                <td>{{item.product.brand}}</td>
+                                <td>
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{item.product.name}}
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" target="_blank" [routerLink]="['/productdetails/',item.product.category, item.product.slug]">Go to Product Page</a>
+                                        <a class="dropdown-item" (click)="getSubmitProduct(j)">Submit a Price</a>
+                                        <a class="dropdown-item" (click)="getSubmitReviewModal(j, item.rating.length)">Submit a Review</a>
+                                    </div>
+                                </td>
+                                <td>
+
+                                    {{item.product.name}}
+                                </td>
+                                <td>{{item.product.ref}}</td>
+                                <td>{{item.product.upc}}</td>
+                                <td>{{item.product.year}}</td>
+                                <td><b>{{item.product.msrp | currency}}</b></td>
+                                <td><b>{{item.product.market_value | currency}}</b></td>
+                                <td>
+                                    <input onkeypress="return event.charCode >= 48" min="1" value="{{item.qunatity}}" id="input{{j}}" type="number" name="qty" style="width: 50px;">
+                                </td>
+                                <td style="background-color: #dff3c9 ;"><b>{{item.qunatity * item.product.market_value | currency}}</b></td>
+                                <td>{{item.created_at | date: 'MM-d-yyyy'}}</td>
+                                <td class="d-sm-flex align-items-center justify-content-between">
+                                    <a class="btn btn-success btn-sm marginRight" style="color:white" (click)="updateCollections(item.id, j)">Update</a>
+                                    <a class="btn btn-danger btn-sm" style="color:white" (click)="delCollection(item.id)">Delete</a></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td style="color: red;font-weight: bold;">Total Collection</td>
+                                <td style="color: green;font-weight: bold;">{{totalQuan}}</td>
+                                <td style="color: green;font-weight: bold;">{{totalSum | currency}}</td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="card-body d-block d-sm-none">
+                    <table class="table table-bordered table-responsive" datatable id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Brand</th>
+                                <th>Product Name</th>
+                                <th>#Ref</th>
+                                <th>UPC</th>
+                                <th>Year</th>
+                                <th>MSRP</th>
+                                <th>Secondary Value</th>
+                                <th class='notexport'>Quantity</th>
+                                <th style="background-color: #dff3c9 ;">Total Market Value</th>
+                                <th>Added On</th>
+                                <th class='notexport'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of collections; let j = index">
+                                <td>{{item.product.category}}</td>
+                                <td>{{item.product.brand}}</td>
+                                <td>
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{item.product.name}}
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" target="_blank" [routerLink]="['/productdetails/',item.product.category, item.product.slug]">Go to Product Page</a>
+                                        <a class="dropdown-item" (click)="getSubmitProduct(j)">Submit a Price</a>
+                                        <a class="dropdown-item" (click)="getSubmitReviewModal(j, item.rating.length)">Submit a Review</a>
+                                    </div>
+                                </td>
+                                <td>{{item.product.ref}}</td>
+                                <td>{{item.product.upc}}</td>
+                                <td>{{item.product.year}}</td>
+                                <td><b>{{item.product.msrp | currency}}</b></td>
+                                <td><b>{{item.product.market_value | currency}}</b></td>
+                                <td>
+                                    <input onkeypress="return event.charCode >= 48" min="1" value="{{item.qunatity}}" id="input{{j}}" type="number" name="qty" style="width: 50px;">
+                                </td>
+                                <td style="background-color: #dff3c9 ;"><b>{{item.qunatity * item.product.market_value | currency}}</b></td>
+                                <td>{{api.dateFormat(item.created_at)}}</td>
+                                <td class="d-sm-flex align-items-center justify-content-between">
+                                    <a class="btn btn-success btn-sm marginRight" style="color:white" (click)="updateCollections(item.id, j)">Update</a>
+                                    <a class="btn btn-danger btn-sm" style="color:white" (click)="delCollection(item.id)">Delete</a></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                                <td style="color: red;font-weight: bold;">Total Collection</td>
+                                <td style="color: green;font-weight: bold;">{{totalQuan}}</td>
+                                <td style="color: green;font-weight: bold;">{{totalSum | currency}}</td>
+                                <td class="border-0"></td>
+                                <td class="border-0"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Modals -->
+<div id="delcollection" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Collection</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteCollections()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="submitPrice" role="dialog" tabindex="-1" aria-labelledby="sign-upLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sign-inLabel">{{submitProd?.product.name}} {{submitProd?.product.msrp | currency}}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="sign-login-form">
+                    <form [formGroup]="submitPriceForm" (ngSubmit)="addPriceRequest()">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputState">* Price You Saw </label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input inputmode="numeric" onkeypress="return event.charCode > 45 && event.charCode <= 57" min="1" type="text" formControlName="price_you_saw" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="inputAddress">MSRP</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="number" readonly value="{{submitProd?.product.msrp}}" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputAddress">* Store & Address Info</label>
+                            <input *ngIf="ngAddress == ''" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" type="text" formControlName="store_address" class="form-control" id="inputAddress" placeholder="Please enter your Store address"
+                                (input)="inputChange($event)">
+                            <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" type="text" class="form-control" formControlName="store_name" id="inputAddress" placeholder="Please enter your Store address"
+                                value="{{ngAddress}}" (input)="inputChange($event)" *ngIf="ngAddress != ''">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1"> Upload Your File (in case you want to upload a picture of the item with the pricing you saw)</label>
+                            <input type="file" (change)="onFileChange($event)" formControlName="image" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                        <!-- <div class="form-group">
+                          <label for="exampleFormControlTextarea1">* Message</label>
+                          <textarea formControlName="message" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Describe the general contents of your collection and if you have proof of purchase for authenticity"></textarea>
+                      </div> -->
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="submitPriceForm.invalid">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="body-content" class="about-content">
+    <ng-template #popTitle>How does the item look or taste?</ng-template>
+    <ng-template #popContent>
+        <p><strong>1 star </strong>= Hard pass</p>
+        <p><strong>3 star </strong>= Ehh, average. So-So</p>
+        <p><strong>5 star </strong>= Absolutely amazing – a must try!</p>
+    </ng-template>
+    <ng-template #popTitle1>When you compare how it looks or tastes to the market price, is it a good deal?</ng-template>
+    <ng-template #popContent1>
+        <p><strong>1 star </strong>= Not at all</p>
+        <p><strong>3 star </strong>= Ehh, Worth it if at retail. So-So</p>
+        <p><strong>5 star </strong>= Definitely – worth every penny</p>
+    </ng-template>
+    <ng-template #popTitle2>Is this a must-have on your collector’s list?</ng-template>
+    <ng-template #popContent2>
+        <p><strong>1 star </strong>= Not worth it</p>
+        <p><strong>3 star </strong>= Ehh, maybe next year.</p>
+        <p><strong>5 star </strong>= Highly coveted and rare!</p>
+    </ng-template>
+    <ng-template #popTitle3>How unique is this product compared to other products in the same category?</ng-template>
+    <ng-template #popContent3>
+        <p><strong>1 star </strong>= Not so much. Pretty common.</p>
+        <p><strong>3 star </strong>= Depends on your location, can be hard to find.</p>
+        <p><strong>5 star </strong>= A collector’s dream – one of a kind!</p>
+    </ng-template>
+</section>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Submit Ratings for: {{reviewProd?.name}} </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="reviewForm" (ngSubmit)="addRatings()">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <span>*Appearance
+                            <a [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+
+                            <ngb-rating class="form-control" [(rate)]="appearanceRate" max="5">
+                              <ng-template let-fill="fill" let-index="index">
+                                  <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                            </ng-template>
+                            </ngb-rating>
+                            </span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <span>*Prestige
+                            <a [ngbPopover]="popContent2" [popoverTitle]="popTitle2" triggers="mouseenter:mouseleave">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                            <ngb-rating class="form-control" [(rate)]="prestigeRate" max="5">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <span>*Uniqueness
+                              <a [ngbPopover]="popContent3" [popoverTitle]="popTitle3" triggers="mouseenter:mouseleave">
+                                  <i class="fa fa-question-circle"></i>
+                              </a>
+                          </span>
+
+                            <ngb-rating class="form-control" [(rate)]="uniquenessRate" max="5">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <span>*Value
+                            <a [ngbPopover]="popContent1" [popoverTitle]="popTitle1" triggers="mouseenter:mouseleave">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                            <ngb-rating class="form-control" [(rate)]="valueRate" max="5">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" type="submit">Submit Your Review</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ngx-spinner></ngx-spinner>

@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header text-small font-weight-bold text-uppercase black" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Update Your Gatsby Guide Profile</div>
+                <div class="card-body">
+                    <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputState">* First Name </label>
+                                <input formControlName="f_name" type="text" class="form-control" placeholder="Please enter your first name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputState">* Last Name</label>
+                                <input formControlName="l_name" type="text" class="form-control" placeholder="Please enter your last name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputState">* Email</label>
+                                <input formControlName="email" readonly type="text" class="form-control" placeholder="Please enter your email">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputState">* Contact Phone Number</label>
+                                <!-- <input formControlName="phone" type="text" class="form-control" placeholder="+120332-23232"> -->
+                                <input formControlName="phone" inputmode="numeric" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" ng2TelInput />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputState">* Username</label>
+                                <input formControlName="username" type="text" class="form-control" placeholder="Please enter your username">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputState">* Location</label>
+                                <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" formControlName="address" type="text" class="form-control" placeholder="Please enter your location">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="profileForm.invalid">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

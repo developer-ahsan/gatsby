@@ -1,0 +1,32 @@
+<section id="body-content" class="faq-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="about-detail text-center">
+                    <h2 class="inner-heading green text-uppercase">FAQ's</h2>
+                    <p>The Gatsby Guide is pretty simple – we add products where the MSRP is different from the secondary Market Pricing. Our users can submit pricing they find and you can gauge if your local store is a good place to buy or not. We aim to
+                        keep things simple, but we’re answering a few questions you might have here:</p>
+                </div>
+                <div class="quest-answers" *ngIf="faqs">
+                    <div class="accordion card-sellgpu" id="accordiontips">
+                        <div class="card-accord" *ngFor="let faq of faqs;let j=index">
+                            <div class="card-acc-header" id="headingTwo">
+
+                                <a class="nav-item nav-link collapsed" data-toggle="collapse" [attr.data-target]="'#collapse'+j" aria-expanded="false">
+          {{faq.ques}}
+                            </a>
+
+                            </div>
+                            <div id="collapse{{j}}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordiontips">
+                                <div class="card-body">
+                                    <p [innerHTML]="faq.answer"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<ngx-spinner></ngx-spinner>

@@ -1,0 +1,17 @@
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <app-sidebar></app-sidebar>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div #topScrollAnchor></div>
+
+        <button id="myBtn" (click)="scrollTop()" title="Go to top"><i class="fas fa-angle-up"></i>
+        </button>
+        <!-- Main Content -->
+        <div id="content">
+            <app-header></app-header>
+            <router-outlet></router-outlet>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</div>

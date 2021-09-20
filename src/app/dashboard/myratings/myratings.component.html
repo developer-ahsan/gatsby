@@ -1,0 +1,162 @@
+<div class="container-fluid">
+    <div class="row" *ngIf="ratings">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-body  d-none d-sm-block">
+                    <table [dtOptions]="dtOptions" class="table table-bordered" datatable id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Overall Score</th>
+                                <th>Appearance Score</th>
+                                <th>Prestige Score</th>
+                                <th>Uniqueness Score</th>
+                                <th>Value Score</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of ratings;let j=index">
+                                <td>{{item?.product.name}}</td>
+                                <td>{{item.overall}}</td>
+                                <td>{{item.appearance}}</td>
+                                <td>{{item.prestige}}</td>
+                                <td>{{item.uniueness}}</td>
+                                <td>{{item.value}}</td>
+                                <td>{{item.created_at | date: 'MM-d-yyyy'}}</td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" style="color:white" (click)="editRatingModal(item,j)">Edit</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-body   d-block d-sm-none">
+                    <table class="table table-bordered table-responsive" datatable id="dataTable" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Overall Score</th>
+                                <th>Appearance Score</th>
+                                <th>Prestige Score</th>
+                                <th>Uniqueness Score</th>
+                                <th>Value Score</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of ratings;let j=index">
+                                <td>{{item?.product.name}}</td>
+                                <td>{{item.overall}}</td>
+                                <td>{{item.appearance}}</td>
+                                <td>{{item.prestige}}</td>
+                                <td>{{item.uniueness}}</td>
+                                <td>{{item.value}}</td>
+                                <td>{{api.dateFormat(item.created_at)}}</td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" style="color:white" (click)="editRatingModal(item,j)">Edit</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #popTitle>How does the item look or taste?</ng-template>
+<ng-template #popContent>
+    <p><strong>1 star </strong>= Hard pass</p>
+    <p><strong>3 star </strong>= Ehh, average. So-So</p>
+    <p><strong>5 star </strong>= Absolutely amazing – a must try!</p>
+</ng-template>
+<ng-template #popTitle1>When you compare how it looks or tastes to the market price, is it a good deal?</ng-template>
+<ng-template #popContent1>
+    <p><strong>1 star </strong>= Not at all</p>
+    <p><strong>3 star </strong>= Ehh, Worth it if at retail. So-So</p>
+    <p><strong>5 star </strong>= Definitely – worth every penny</p>
+</ng-template>
+<ng-template #popTitle2>Is this a must-have on your collector’s list?</ng-template>
+<ng-template #popContent2>
+    <p><strong>1 star </strong>= Not worth it</p>
+    <p><strong>3 star </strong>= Ehh, maybe next year.</p>
+    <p><strong>5 star </strong>= Highly coveted and rare!</p>
+</ng-template>
+<ng-template #popTitle3>How unique is this product compared to other products in the same category?</ng-template>
+<ng-template #popContent3>
+    <p><strong>1 star </strong>= Not so much. Pretty common.</p>
+    <p><strong>3 star </strong>= Depends on your location, can be hard to find.</p>
+    <p><strong>5 star </strong>= A collector’s dream – one of a kind!</p>
+</ng-template>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Submit Ratings for: {{productName}}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="reviewForm" (ngSubmit)="addRatings()">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <span>*Appearance
+                            <a [ngbPopover]="popContent" [popoverTitle]="popTitle" placement="right">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+
+                            <ngb-rating class="form-control" [(rate)]="appearanceRate" max="5">
+                              <ng-template let-fill="fill" let-index="index">
+                                  <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                            </ng-template>
+                            </ngb-rating>
+                            </span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <span>*Prestige
+                            <a [ngbPopover]="popContent2" [popoverTitle]="popTitle2" placement="right">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                            <ngb-rating class="form-control" [(rate)]="prestigeRate" max="5">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <span>*Uniqueness
+                              <a [ngbPopover]="popContent3" [popoverTitle]="popTitle3" placement="right">
+                                  <i class="fa fa-question-circle"></i>
+                              </a>
+                          </span>
+
+                            <ngb-rating class="form-control" [(rate)]="uniquenessRate" max="5">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <span>*Value
+                            <a [ngbPopover]="popContent1" [popoverTitle]="popTitle1" placement="right">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                            <ngb-rating class="form-control" [(rate)]="valueRate" max="5">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" type="submit">Update Your Review</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

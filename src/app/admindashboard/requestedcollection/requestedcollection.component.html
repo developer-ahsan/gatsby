@@ -1,0 +1,123 @@
+<div class="container-fluid">
+    <div class="row" *ngIf="ratings">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <!-- <div class="card-header text-small white"><a class="btn btn-success">Export to Excel</a></div> -->
+                <div class="card-body">
+                    <!-- update -->
+
+                    <!-- update -->
+                    <table [dtOptions]="dtOptions" datatable class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <!-- update -->
+                                <th class='notexport'>
+                                    Check
+                                </th>
+                                <!-- update -->
+                                <th>Date Requested</th>
+                                <th class='notexport' hidden>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Category</th>
+                                <th>Brand</th>
+                                <th>Model</th>
+                                <th>UPC</th>
+                                <th>Expected Value</th>
+                                <th>Quantity</th>
+                                <th>Location</th>
+                                <th>Details</th>
+                                <th>Status</th>
+                                <th class='notexport'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of ratings; let j=index">
+                                <!-- update -->
+                                <td>
+
+                                </td>
+                                <!-- update -->
+                                <td>{{item.created_at | date: 'MM/dd/yyyy' }}</td>
+                                <td hidden>{{item.id }}</td>
+                                <td>{{item.f_name }}</td>
+                                <td>{{item.l_name }}</td>
+                                <td>{{item.email}}</td>
+                                <td>{{item.phone}}</td>
+                                <td>{{item.category}}</td>
+                                <td>{{item.brand}}</td>
+                                <td>{{item.model}}</td>
+                                <td>{{item.upc}}</td>
+                                <td>{{item.value}}</td>
+                                <td>{{item.quantity}}</td>
+                                <td>{{item.location}}</td>
+                                <td>{{item.details}}</td>
+                                <td>
+                                    <a style="color: white;" class="nav-link dropdown-toggle btn btn-danger btn-sm" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="item.status == 'pending'">
+                                        Pending
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" (click)="sendClose(item.id)">Send Close</a>
+                                        <a class="dropdown-item" (click)="openModal(item.id)">Send Price</a>
+                                    </div>
+                                    <!-- <a style="color: white;" class="btn btn-danger btn-sm" *ngIf="item.status == 'pending'">Pending</a> -->
+                                    <a style="color: white;" class="marginRight btn btn-success btn-sm" *ngIf="item.status == 'closed'">Closed</a>
+                                    <a style="color: white;" class="btn btn-success btn-sm" *ngIf="item.status == 'active'">Approved</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" (click)="delItem(item.id, j)"><i class="fa fa-trash white"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="priceModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Send Collection Price</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" (ngSubmit)="sendPrice()">
+                    <div class="form-group">
+                        <label for="inputState">* Price </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">$</span>
+                            </div>
+                            <input onkeypress="return event.charCode >= 43 && event.charCode <= 57" min="1" class="form-control" type="text" name="price" [(ngModel)]="ngPrice">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">Send Price</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- update -->
+<div id="delItem" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Requested Price</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteItem()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- update -->
+<ngx-spinner></ngx-spinner>

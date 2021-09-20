@@ -1,0 +1,86 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success home-icons shadow h-100 py-2">
+                <a [routerLink]="['/dashboard/mycollections']">
+                    <div class="card-body" style="padding: 10px;">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="h2 mb-0 font-weight-bold green">{{collection}}</div>
+                                <div class="text-sm font-weight-bold text-uppercase mb-1">My Collection ({{collectionSum | currency}})</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon-home"><img width="60px" src="./assets/admin/img/my-collection.svg" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success home-icons shadow h-100 py-2">
+                <a [routerLink]="['/dashboard/submitted-prices']">
+                    <div class="card-body" style="padding: 10px;">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="h2 mb-0 font-weight-bold green">{{submissions}}</div>
+                                <div class="text-sm font-weight-bold text-uppercase mb-1">My Price Submissions</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon-home"><img width="60px" src="./assets/admin/img/my-price.svg" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success home-icons shadow h-100 py-2">
+                <a [routerLink]="['/dashboard/myratings']">
+                    <div class="card-body" style="padding: 10px;">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="h2 mb-0 font-weight-bold green">{{ratings}}</div>
+                                <div class="text-sm font-weight-bold text-uppercase mb-1">My Ratings</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon-home"><img width="60px" src="./assets/admin/img/my-ratings.svg" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" *ngIf="collections">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header text-lg font-weight-bold text-uppercase green">My Collections</div>
+                <div class="card-body my-collection">
+                    <div class="row">
+                        <div class="col-md-3" *ngFor="let item of collections">
+                            <div class="media hover-efect">
+                                <div class="img-icon"> <img src="{{api.imageUrl + item.product.image}}"></div>
+                                <div class="media-body">
+                                    <div class="h5 mt-0" style="font-size: small;margin: 0px;">{{item.product.brand}} {{item.product.name}}</div>
+                                    <div class="h5 mt-0 mb-0" style="font-size: small;">Date Added: <span>{{api.dateFormat(item.created_at)}}</span></div>
+                                    <div class="h5 mt-0" style="font-size: small;">Total Product Value: <span>{{item.qunatity * item.product.market_value | currency}}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
+<ngx-spinner></ngx-spinner>

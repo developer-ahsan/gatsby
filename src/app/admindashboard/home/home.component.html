@@ -1,0 +1,133 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <div class="row" *ngIf="productCount">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card home-icons shadow h-100 py-2">
+                <div class="card-body" style="padding: 10px;">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h2 mb-0 font-weight-bold green">{{productCount}}</div>
+                            <div class="text-capitalize mb-1">New Products Added</div>
+                            <button type="button" class="btn btn-outline-success" [routerLink]="['manageproducts']">Add New Product</button>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon-home"><img width="60px" src="./assets/admin/img/my-collection.svg" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card home-icons shadow h-100 py-2">
+                <div class="card-body" style="padding: 10px;">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h2 mb-0 font-weight-bold green">{{submittedCount}}</div>
+                            <div class="text-capitalize mb-1">New Prices Submitted</div>
+                            <button type="button" class="btn btn-outline-success" [routerLink]="['submittedprices']">View Price Quotes</button>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon-home"><img width="60px" src="./assets/admin/img/my-price.svg" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card home-icons shadow h-100 py-2">
+                <div class="card-body" style="padding: 10px;">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h2 mb-0 font-weight-bold green">{{requestedCount}}</div>
+                            <div class="text-capitalize mb-1">New Prices Requested</div>
+                            <button type="button" class="btn btn-outline-success" [routerLink]="['requestedprices']">View Requested Prices</button>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon-home"><img width="60px" src="./assets/admin/img/my-ratings.svg" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card home-icons shadow h-100 py-2">
+                <div class="card-body" style="padding: 10px;">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h2 mb-0 font-weight-bold green">{{requestedcollections}}</div>
+                            <div class="text-capitalize mb-1">Requested Collections</div>
+                            <button type="button" class="btn btn-outline-success" [routerLink]="['requestedcollection']">View Requested Collections</button>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon-home"><img width="60px" src="./assets/admin/img/requested_collection.svg" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Charts -->
+    <div class="row" *ngIf="productCount">
+        <!-- Area Chart -->
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Product Pricing Submitted This Week </h6>
+                    <p class="m-0 font-weight-bold text-primary" [routerLink]="['submittedprices']"><a>Show All</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div>
+                        <!-- <canvas id="lineChart" #lineChart>{{push}}</canvas> -->
+                        <canvas baseChart [datasets]="pull_data" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6" *ngIf="requestedPrices">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">New Price Request</h6>
+                    <p class="m-0 font-weight-bold text-primary" [routerLink]="['requestedprices']"><a>Show All</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body" *ngIf="requestedPrices">
+                    <table class="table table-bordered table-responsive" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Date Requested</th>
+                                <th>Request By</th>
+                                <th>Product Requested</th>
+                                <th>Price You Saw</th>
+                                <th>Reference</th>
+                                <th>Email</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of requestedPrices">
+                                <td>{{item.created_at | date:'MM-d-yyyy'}}</td>
+                                <td>{{item.full_name}}</td>
+                                <td>{{item.model}}</td>
+                                <td>${{item.price_you_saw}}</td>
+                                <td>{{item.ref_upc}}</td>
+                                <td>{{item.email}}</td>
+                                <td>{{item.location}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

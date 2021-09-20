@@ -1,0 +1,83 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~ngx-toastr/toastr';
+th {
+    font-size: smaller;
+}
+
+th {
+    min-width: 40px !important;
+}
+
+td {
+    min-width: 40px !important;
+}
+
+
+/* #header-area .btn {
+    padding: 5px !important;
+}
+
+@media only screen and (max-width: 991px) {
+    .content-area li {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+    .dButton {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .dButton {
+        width: 30%;
+    }
+}
+
+.btn-primary {
+    background-color: #AA8A31;
+    border-color: #AA8A31;
+    font-weight: 800;
+}
+
+.btn-success,
+.btn-secondary {
+    background-color: #0D5B31;
+    border-color: #0D5B31;
+    font-weight: 800;
+}
+
+.btn-outline-success {
+    color: #0D5B31;
+    border-color: #0D5B31;
+    font-weight: 800;
+} */
+
+.marginRight {
+    margin-right: 5px;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+#ngb-popover-1,
+#ngb-popover-2,
+#ngb-popover-3,
+#ngb-popover-0,
+#ngb-popover-4,
+#ngb-popover-5,
+#ngb-popover-6,
+#ngb-popover-7 {
+    width: 200px !important;
+}
+
+.iti {
+    width: 100% !important;
+}

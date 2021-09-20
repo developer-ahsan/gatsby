@@ -1,0 +1,373 @@
+<section id="header-area" class="home-body">
+    <div class="inner-header-back prod-details-container" style="background: url(./assets/web/images/detail-back.jpg);">
+        <div class="container">
+            <div class="row justify-content-center align-items-center" *ngIf="products">
+                <div class="col-md-2">
+                    <div class="prod-img img-thumbnail"><img style="height:180px;width:200px; object-fit: contain;" src="{{api?.imageUrl + products?.image}}" /></div>
+                </div>
+                <div class="col-md-10">
+                    <div class="prod-details">
+                        <h1 class="gold"> {{products?.brand}} - {{products?.name}}</h1>
+                        <!-- <p class="gold">{{products?.brand}}--{{products?.category}}</p> -->
+                        <!-- <div class="date-added white">Date Added: {{products?.created_at | date: 'shortDate'}}</div> -->
+                        <ul class="pricing-details">
+                            <li>
+                                <div class="msrp-price heading gold">MSRP Price ($)</div>
+                                <div class="msrp-price pricing white">{{products?.msrp | currency}}</div>
+                            </li>
+                            <li>
+                                <div class="mvp-price heading gold">Market Value Price ($)</div>
+                                <div class="mvp-price pricing white">{{products?.market_value | currency}}</div>
+                            </li>
+                            <li>
+                                <div class="variation-price heading gold">Price Variation (%)</div>
+                                <div class="percent-price pricing white">{{((products?.variation)*100).toFixed(2)}}%
+                                    <i *ngIf="products?.variation > 0" style="color: rgb(41, 214, 41);" class="fa fa-arrow-up"></i>
+                                    <i *ngIf="products?.variation < 0" style="color: rgb(253, 1, 1);" class="fa fa-arrow-down"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="d-sm-flex" style="justify-content: flex-end;">
+                        <button (click)="getSubmitProduct(products.id)" class="dButton btn btn-light text-uppercase" style="margin-right: 10px;">Submit Price</button>
+                        <button class="btn btn-success text-uppercase dButton" *ngIf="!products?.submitCheck" (click)="addtoCollections(products.id)">Add item to your Collection</button>
+                        <div class="dropdown" *ngIf="products?.submitCheck">
+                            <button class="btn btn-warning text-uppercas dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ITEM IS IN YOUR COLLECTION
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" [routerLink]="['/dashboard/mycollections']">View In Collection</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="body-content" class="about-content">
+    <ng-template #popTitle>How does the item look or taste?</ng-template>
+    <ng-template #popContent>
+        <p><strong>1 star </strong>= Hard pass</p>
+        <p><strong>3 star </strong>= Ehh, average. So-So</p>
+        <p><strong>5 star </strong>= Absolutely amazing – a must try!</p>
+    </ng-template>
+    <ng-template #popTitle1>When you compare how it looks or tastes to the market price, is it a good deal?</ng-template>
+    <ng-template #popContent1>
+        <p><strong>1 star </strong>= Not at all</p>
+        <p><strong>3 star </strong>= Ehh, Worth it if at retail. So-So</p>
+        <p><strong>5 star </strong>= Definitely – worth every penny</p>
+    </ng-template>
+    <ng-template #popTitle2>Is this a must-have on your collector’s list?</ng-template>
+    <ng-template #popContent2>
+        <p><strong>1 star </strong>= Not worth it</p>
+        <p><strong>3 star </strong>= Ehh, maybe next year.</p>
+        <p><strong>5 star </strong>= Highly coveted and rare!</p>
+    </ng-template>
+    <ng-template #popTitle3>How unique is this product compared to other products in the same category?</ng-template>
+    <ng-template #popContent3>
+        <p><strong>1 star </strong>= Not so much. Pretty common.</p>
+        <p><strong>3 star </strong>= Depends on your location, can be hard to find.</p>
+        <p><strong>5 star </strong>= A collector’s dream – one of a kind!</p>
+    </ng-template>
+    <div class="container" *ngIf="products">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="product-details-container">
+                    <h2 class="inner-heading gold text-uppercase">Product Info</h2>
+                    <div class="info-detail">
+                        <ul>
+                            <li *ngIf="products?.category">
+                                <div class="info-name">Category</div>
+                                <div class="info-type">{{products?.category}}</div>
+                            </li>
+                            <li *ngIf="products?.brand">
+                                <div class="info-name">Brand</div>
+                                <div class="info-type">{{products?.brand}}</div>
+                            </li>
+                            <li *ngIf="products?.name">
+                                <div class="info-name">Product Name</div>
+                                <div class="info-type">{{products?.name}}</div>
+                            </li>
+                            <li *ngIf="products?.ref !=null && products.ref !='null' && products.ref !=''">
+                                <div class="info-name">Ref # </div>
+                                <div class="info-type">{{products?.ref}}</div>
+                            </li>
+                            <li *ngIf="products?.upc != null && products.upc !='null' && products.upc !=''">
+                                <div class="info-name">UPC</div>
+                                <div class="info-type">{{products?.upc}}</div>
+                            </li>
+                            <li *ngIf="products?.size != null && products.size !='null' && products.size !=''">
+                                <div class="info-name">Size</div>
+                                <div class="info-type">{{products?.size}}</div>
+                            </li>
+                            <li *ngIf="products?.year != null && products.year !='null' && products.year !=''">
+                                <div class="info-name">Year</div>
+                                <div class="info-type">{{products?.year}}</div>
+                            </li>
+                            <li *ngIf="products?.other1 !=null && products.other1 !='null' && products.other1 !=''">
+                                <div class="info-name">Other</div>
+                                <div class="info-type">{{products?.other1}}</div>
+                            </li>
+                            <li *ngIf="products?.other2 !=null && products.other2 !='null' && products.other2 !=''">
+                                <div class="info-name">Other</div>
+                                <div class="info-type">{{products?.other2}}</div>
+                            </li>
+                            <li *ngIf="products?.other3 != ' ' && products.other3 !=null && products.other3 !='null' && products.other3 !=''">
+                                <div class="info-name">Other</div>
+                                <div class="info-type">{{products?.other3}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <div class="monthly-report">
+                        monthly reporting graph show here
+                    </div> -->
+                </div>
+            </div>
+            <div class="col-md-5" *ngIf="products">
+                <div class="user-rating-area">
+                    <h3 class="inner-heading text-uppercase user-rating-head">User Ratings</h3>
+                    <div class="rating-area">
+                        <div class="lets-rate">
+                            <ul>
+                                <li class="over-all">
+                                    <div class="rate-hed green">{{products?.overallAverage}}</div>
+                                    <span class="gold">Overall Rating</span>
+                                </li>
+                                <li style="min-width: 120px;">
+                                    <div class="rate-hed gold">{{products?.appearanceAverage}}</div>
+                                    <span>Appearance
+                                        <a [ngbPopover]="popContent" [popoverTitle]="popTitle" placement="right">
+                                            <i class="fa fa-question-circle"></i>
+                                        </a>
+                                    </span>
+                                </li>
+                                <li style="min-width: 120px;">
+                                    <div class="rate-hed gold">{{products?.valueAverage}}</div>
+                                    <span>Value
+                                        <a [ngbPopover]="popContent1" [popoverTitle]="popTitle1" placement="left">
+                                            <i class="fa fa-question-circle"></i>
+                                        </a>
+                                    </span>
+                                </li>
+                                <li style="min-width: 120px;">
+                                    <div class="rate-hed gold">{{products?.prestigeAverage}}</div>
+                                    <span>Prestige
+                                        <a [ngbPopover]="popContent2" [popoverTitle]="popTitle2" placement="right">
+                                            <i class="fa fa-question-circle"></i>
+                                        </a>
+                                    </span>
+                                </li>
+                                <li style="min-width: 120px;">
+                                    <div class="rate-hed gold">{{products?.uniquenessAverage}}</div>
+                                    <span>Uniqueness
+                                        <a [ngbPopover]="popContent3" [popoverTitle]="popTitle3" placement="left">
+                                            <i class="fa fa-question-circle"></i>
+                                        </a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div *ngIf="!checkLogin">
+                            <button class="btn btn-success btn-lg btn-block text-uppercase" data-toggle="modal" data-target="#sign-in" (click)="loginRequireToast()">Submit Your Own Ratings</button>
+                        </div>
+                        <div *ngIf="checkLogin">
+                            <button *ngIf="!products.checkRating" class="btn btn-success btn-lg btn-block text-uppercase" data-toggle="modal" data-target="#myModal">Submit Your Own Ratings</button>
+                            <button *ngIf="products.checkRating" class="btn btn-success btn-lg btn-block text-uppercase">You Already Submitted Review</button>
+                        </div>
+                    </div>
+                    <h3 class="inner-heading text-uppercase user-rating-head">Historical Pricing Data</h3>
+                    <div class="info-detail" *ngIf="products">
+                        <ul>
+                            <li>
+                                <div class="info-name"># Of Price Submissions</div>
+                                <div class="info-type">{{products.submit_price_count}}</div>
+                            </li>
+                            <!-- <li>
+                                <div class="info-name">Price Premium</div>
+                                <div class="info-type">60.5%</div>
+                            </li>
+                            <li>
+                                <div class="info-name">Average Sale Price</div>
+                                <div class="info-type">$348</div>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Submit Ratings for: {{products?.name}} </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="reviewForm" (ngSubmit)="addRatings()">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <span>*Appearance
+                            <a [ngbPopover]="popContent" [popoverTitle]="popTitle" placement="right">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+
+                            <ngb-rating class="form-control" [(rate)]="appearanceRate" max="5">
+                              <ng-template let-fill="fill" let-index="index">
+                                  <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                            </ng-template>
+                            </ngb-rating>
+                            </span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <span>*Prestige
+                            <a [ngbPopover]="popContent2" [popoverTitle]="popTitle2" placement="right">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                            <ngb-rating class="form-control" [(rate)]="prestigeRate" max="5">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <span>*Uniqueness
+                              <a [ngbPopover]="popContent3" [popoverTitle]="popTitle3" placement="right">
+                                  <i class="fa fa-question-circle"></i>
+                              </a>
+                          </span>
+
+                            <ngb-rating class="form-control" [(rate)]="uniquenessRate" max="5">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <span>*Value
+                            <a [ngbPopover]="popContent1" [popoverTitle]="popTitle1" placement="right">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                            <ngb-rating class="form-control" [(rate)]="valueRate" max="5">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" type="submit">Submit Your Review</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="myCollection" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sign-inLabel">Add {{products?.name}} to your Collection</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="quantityForm" (ngSubmit)="addProductCollection()">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <input inputmode="numeric" onkeypress="return event.charCode >= 48" min="1" formControlName="quantity" type="number" class="form-control" placeholder="Quantity">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" type="submit" [disabled]="quantityForm.invalid">Add To Collection</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="submitPrice" role="dialog" tabindex="-1" aria-labelledby="sign-upLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sign-inLabel">{{products?.name}} {{products?.msrp | currency}}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body" *ngIf="showSubmitForm">
+                <div class="sign-login-form">
+                    <form [formGroup]="submitPriceForm" (ngSubmit)="addPriceRequest()">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputState">* Price You Saw </label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input inputmode="numeric" onkeypress="return event.charCode > 45 && event.charCode <= 57" min="1" type="text" step=".01" formControlName="price_you_saw" class="form-control" aria-label="Amount (to the nearest dollar)" (focus)="numberFormat($event.target.value,'price_you_saw')"
+                                        (blur)="thousandFormator($event.target.value,'price_you_saw')">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="inputAddress">MSRP</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="number" readonly value="{{products?.msrp}}" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputAddress">* Store & Address Info</label>
+                            <input *ngIf="ngAddress == ''" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" type="text" formControlName="store_address" class="form-control" id="inputAddress" placeholder="Please enter your Store address"
+                                (input)="inputChange($event)">
+                            <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" type="text" class="form-control" formControlName="store_name" id="inputAddress" placeholder="Please enter your Store address"
+                                value="{{ngAddress}}" (input)="inputChange($event)" *ngIf="ngAddress != ''">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1"> Upload Your File </label>
+                            <p>(in case you want to upload a picture of the item with the pricing you saw)</p>
+                            <input type="file" (change)="onFileChange($event)" formControlName="image" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="exampleFormControlTextarea1">* Message</label>
+                            <textarea formControlName="message" class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Describe the general contents of your collection and if you have proof of purchase for authenticity"></textarea>
+                        </div> -->
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="submitPriceForm.invalid">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="showPercentage" role="dialog" tabindex="-1" aria-labelledby="sign-upLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sign-inLabel">{{products?.name}} {{products?.msrp | currency}}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body" *ngIf="showSubmitForm">
+                <p *ngIf="checkdiscount == 'premium'" style="color: #ff0303;">
+                    <i class="fa fa-exclamation-triangle"></i>Thanks for providing that price. It looks like it was a {{percentageValue.toFixed(2)}}% premium compared to MSRP.
+                </p>
+                <p *ngIf="checkdiscount == 'discount'" style="color: #075905;">
+                    Thanks for providing that price. It looks like it was a {{percentageValue.toFixed(2)}}% discount compared to MSRP.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

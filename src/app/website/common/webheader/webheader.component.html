@@ -1,0 +1,244 @@
+<header class="header">
+    <div class="main-header d-none d-sm-block">
+        <div class="container">
+            <div class="d-flex flex-column flex-sm-row flex-md-row align-items-center">
+                <div class="logo mobile-logo-off mr-auto">
+                    <a [routerLink]="['/']"><img src="./assets/web/images/logo.svg" /></a>
+                </div>
+                <div class="register">
+                    <ul *ngIf="!checkLogin">
+                        <li><a href="#" data-toggle="modal" data-target="#sign-in"><svg xmlns="http://www.w3.org/2000/svg" width="18.662" height="25.802" viewBox="0 0 18.662 25.802">
+                      <g id="login" transform="translate(-80.994)">
+                        <g id="Group_1380" data-name="Group 1380" transform="translate(80.994)">
+                          <path id="Path_992" data-name="Path 992" d="M90.325,0a7.554,7.554,0,0,0-7.546,7.546v4.31a.2.2,0,0,1-.108.147c-.408.136-.739.254-1.043.371a1.044,1.044,0,0,0-.635.933v9.9a1.051,1.051,0,0,0,.631.933,23.619,23.619,0,0,0,17.4,0,1.051,1.051,0,0,0,.63-.933v-9.9a1.044,1.044,0,0,0-.635-.933c-.3-.117-.635-.235-1.043-.371a.2.2,0,0,1-.108-.147V7.546A7.554,7.554,0,0,0,90.325,0ZM88.27,16.322a2.055,2.055,0,1,1,4.11,0,2.024,2.024,0,0,1-1.028,1.74v3.4a1.028,1.028,0,1,1-2.055,0v-3.4A2.024,2.024,0,0,1,88.27,16.322Zm7.006-8.776v3.718a23.554,23.554,0,0,0-9.9,0V7.546a4.951,4.951,0,0,1,9.9,0Z" transform="translate(-80.994)"/>
+                        </g>
+                      </g>
+                    </svg>
+                    Login</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#sign-up"><svg xmlns="http://www.w3.org/2000/svg" width="22.789" height="25.802" viewBox="0 0 22.789 25.802">
+                      <g id="register" transform="translate(-29.896 0)">
+                        <path id="Path_990" data-name="Path 990" d="M121.472,102.242a22.923,22.923,0,0,0,.866,4.647c1.126,3.727,3.114,6.377,5.913,7.883,2.8-1.506,4.788-4.156,5.913-7.883a22.929,22.929,0,0,0,.866-4.647l-6.78-3.39Z" transform="translate(-86.961 -93.871)" fill="#fff"/>
+                        <path id="Path_991" data-name="Path 991" d="M52.672,6.03a.756.756,0,0,0-.417-.637L41.629.08a.756.756,0,0,0-.676,0L30.325,5.393a.756.756,0,0,0-.417.637,26.783,26.783,0,0,0,1.072,8.115,19.8,19.8,0,0,0,3.246,6.569,15.364,15.364,0,0,0,6.795,5.038.756.756,0,0,0,.538,0,15.364,15.364,0,0,0,6.795-5.038A19.8,19.8,0,0,0,51.6,14.145,26.782,26.782,0,0,0,52.672,6.03Zm-11.047,16.4a.756.756,0,0,1-.67,0c-3.366-1.664-5.73-4.684-7.025-8.974a24.679,24.679,0,0,1-.964-5.487.756.756,0,0,1,.416-.723l7.57-3.785a.756.756,0,0,1,.676,0L49.2,7.245a.756.756,0,0,1,.416.723,24.679,24.679,0,0,1-.964,5.486C47.355,17.745,44.991,20.765,41.626,22.429Z"/>
+                      </g>
+                    </svg>
+                    Register</a></li>
+                    </ul>
+
+                    <div *ngIf="checkLogin" class="btn-group ">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          My Account
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" (click)="openDashboard()">Dashboard</a>
+                            <a class="dropdown-item" [routerLink]="['/admin/profile']">My Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-nav" #navbar>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+            <div class="container">
+                <div class="nav-logo" [routerLink]="['/']"><img src="./assets/web/images/logo.svg" /></div>
+                <div class="fr-mobile d-lg-none">
+                    <div class="d-flex flex-row-reverse">
+
+                        <div class="search-mobile">
+                            <div class="search-icon" (click)="mobileSearcsh('open')">
+                                <i class="fa fa-search" [hidden]="mobileSearch == 1"></i>
+                                <i class="fa fa-times" [hidden]="mobileSearch == 0"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button #navbarToggler class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                            <a href="" class="nav-link" (click)="collapseNav()" [routerLink]="['']">Home</a>
+                        </li>
+                        <li class="nav-item dropdown" routerLinkActive="active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories
+                  </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" *ngIf="categories">
+                                <a (click)="collapseNav()" *ngFor="let category of categories" class="dropdown-item" [routerLink]="['/products/',category.slug,'page',1]">{{category.category}}</a>
+                            </div>
+                        </li>
+                        <li class="nav-item" routerLinkActive="active">
+                            <a href="" (click)="collapseNav()" class="nav-link" [routerLink]="['/submitprice']">Submit a Price</a>
+                        </li>
+                        <li class="nav-item" routerLinkActive="active">
+                            <a (click)="collapseNav()" class="nav-link" [routerLink]="['/requestprice']">Request A Price</a>
+                        </li>
+                        <li class="nav-item" routerLinkActive="active">
+                            <a (click)="collapseNav()" class="nav-link" [routerLink]="['/aboutus']">About Us</a>
+                        </li>
+                        <li *ngIf="!checkLogin" ngcontent-dgd-c50="" routerlinkactive="active" class="nav-item d-block d-sm-none"><a data-toggle="modal" data-target="#sign-in" ngcontent-dgd-c50="" class="nav-link">Login</a></li>
+                        <li *ngIf="!checkLogin" ngcontent-dgd-c50="" routerlinkactive="active" class="nav-item d-block d-sm-none"><a data-toggle="modal" data-target="#sign-up" ngcontent-dgd-c50="" class="nav-link">Register</a></li>
+
+                        <li *ngIf="checkLogin" ngcontent-dgd-c50="" routerlinkactive="active" class="nav-item d-block d-sm-none"><a ngcontent-dgd-c50="" class="nav-link" (click)="openDashboard()">Dashboard</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="top-left-menus d-lg-none mobil" [hidden]="mobileSearch == 0">
+        <div class="mobile-search-form w-100">
+            <form class="px-3" method="get" action="/search" id="index_search_mob">
+                <input type="hidden" name="model_id" id="model_id_mob" value="">
+                <div class="input-group">
+                    <input id="search_place_mob" name="search_text" type="text" class="form-control search-mob ui-autocomplete-input" placeholder="Search to find a price" (keyup)="getSearchProducts($event.target.value)" aria-label="Search to find a price" [(ngModel)]="ngSearch"
+                        autocomplete="off">
+                    <div class="dropdown-menu" [ngStyle]="{'height': searchProducts.length > 0 ? '100px' : 'auto','display': searchProducts.length > 0 ? 'block': 'none' }" style="background-color: white; width: 100%;height: 100px;overflow-y:auto; text-align: left;padding: 5px 10px;">
+                        <a href="javascript:void(0)" class="dropdown-item" *ngFor="let item of searchProducts" (click)="getProductName(item.name)" [routerLink]="['/productdetails', item.cat_slug, item.slug]">{{item.brand}} {{item.name}}</a>
+                    </div>
+                    <div class="input-group-append">
+                        <button (click)="mobileSearcsh('search')" class="btn btn-outline-secondary close-se" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+<!-- Sin in -->
+<div class="modal fade" id="sign-up" tabindex="-1" aria-labelledby="sign-inLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sign-inLabel">Create Your Account In The Gatsby Guide</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="sign-login-form">
+                    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="name-signup" class="sr-only">First Name</label>
+                                <input formControlName="f_name" type="text" class="form-control" id="name-login" placeholder="First Name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="name-signup" class="sr-only">Last Name</label>
+                                <input formControlName="l_name" type="text" class="form-control" id="name-login" placeholder="Last Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email-login" class="sr-only">Email address</label>
+                            <input formControlName="email" type="email" class="form-control" id="email-login" placeholder="Email">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="password-signup" class="sr-only">Password</label>
+                                <input formControlName="password" type="password" class="form-control" id="password-signup" placeholder="Password">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Confirm Password</label>
+                                <input formControlName="c_password" type="password" class="form-control" id="password-confirm" placeholder="Confirm Password">
+                            </div>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="remeber">
+                            <label class="form-check-label" for="remeber">I agree <a href="#">terms & Condtions</a></label>
+                        </div>
+                        <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary btn-lg btn-block">Register Your Account</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p>Already have an account? <a (click)="openmodel('in')">Log in here</a></p>
+                <p>By signing up with The Gatsby Guide you agree with <a data-dismiss="modal" [routerLink]="['/privacy-policy']">our Terms</a> of Use and <a data-dismiss="modal" [routerLink]="['/privacy-policy']">Privacy Policy.</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sin Up -->
+<div class="modal fade" id="sign-in" tabindex="-1" aria-labelledby="sign-upLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sign-inLabel">Sign In The Gatsby Guide</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="sign-login-form">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="email-login" class="sr-only">Email address</label>
+                                <input formControlName="email" type="email" class="form-control" id="email-login" placeholder="Email">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password-confirm" class="sr-only">Password</label>
+                                <input formControlName="password" type="password" class="form-control" id="password" placeholder="Password">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block" type="submit" [disabled]="loginForm.invalid">Sign In</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p>Forget Password? <a (click)="openmodel('forget')">Reset your password here</a></p>
+                <p>Don't have an account? <a (click)="openmodel('up')">Create your account here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Forget Password -->
+<div class="modal fade" id="sign-reset" tabindex="-1" aria-labelledby="sign-upLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sign-inLabel">Forget Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="sign-login-form">
+                    <form [formGroup]="resetForm" (ngSubmit)="passwordReset()">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="email-login" class="sr-only">Email address</label>
+                                <input formControlName="email" type="email" class="form-control" id="email-login" placeholder="Email">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block" type="submit" [disabled]="resetForm.invalid">Reset Password</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" (click)="openmodel('in')" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="logout()">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

@@ -1,0 +1,81 @@
+<section id="body-content" class="faq-content" style="margin-bottom: 0px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="about-detail text-center" *ngIf="category">
+                    <h2 class="inner-heading green text-uppercase">{{category.category}}</h2>
+                    <p [innerHTML]="category.content"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="body-content" class="body-content text-center" *ngIf="products" style="min-height: 500px;">
+    <div class="container">
+        <div class="row mb-2" *ngIf="_products">
+            <div class="input-group-prepend col-md-3 " style="margin: 5px;margin-left: 20px;margin-right: 20px;">
+                <select [(ngModel)]="ngFilter" (change)="filterProducts()" style="height: 38px;" class="custom-select">
+                <option value="filter">Filter By Price</option>
+                <option value="L_To_H">Price Low to high</option>
+                <option value="H_To_L">Price high to low</option>
+            </select>
+            </div>
+            <div class="input-group-prepend col-md-3 " style="margin: 5px;margin-left: 20px;margin-right: 20px;" *ngIf="brands">
+                <select [(ngModel)]="ngBrand" (change)="filterBrandProducts()" style="height: 38px;" class="custom-select">
+                <option value="filter">Filter By Brand</option>
+                <option  *ngFor="let item of brands"    value="{{item.slug}}">{{item.model}}</option>
+            </select>
+            </div>
+        </div>
+        <div *ngIf="_products">
+            <div style="margin-top: 40px;" *ngIf="_products.length == 0" class="text-center">
+                <h3 *ngIf="category">We didn't have any product for {{category.category}}...</h3>
+                <p>Coming Soon...</p>
+            </div>
+        </div>
+        <div class="row" *ngIf="_products">
+
+            <div class="col-md-12">
+                <div class="content-area">
+                    <ul>
+                        <li *ngFor="let product of _products">
+                            <a [routerLink]="['/productdetails',category.slug, product.slug]">
+                                <div class="popular-area">
+                                    <div class="category-name">{{product.category}}</div>
+                                    <div class="img-area">
+                                        <img style="height:120px;width:120px; object-fit: contain;" src="{{api.imageUrl + product.image}}" /></div>
+                                    <div class="category-brand">{{product.brand}}</div>
+                                    <div class="name">{{product.name}}</div>
+                                    <div class="price">{{product.market_value | currency}}</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="text-center page-area">
+                    <ul class="pagination" *ngIf="paginations.length > 0">
+                        <li class="page-item" *ngIf="page > 1">
+                            <a class="page-link" (click)="changePage(page-1)" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item" *ngFor="let item of paginations">
+                            <a class="page-link" (click)="changePage(item)" [ngClass]="{'active': page == item}">{{item}}</a>
+                        </li>
+                        <li class="page-item" *ngIf="paginations.length > 1 && page < paginations.length">
+                            <a class="page-link" (click)="changePage(page+1)" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <pagination-controls *ngIf="products.length >15" (pageChange)="pageChanged($event)"></pagination-controls> -->
+
+</section>
+<ngx-spinner></ngx-spinner>

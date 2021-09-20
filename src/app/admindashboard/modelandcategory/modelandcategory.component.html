@@ -1,0 +1,264 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6 col-lg-6" *ngIf="category">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Categories</h6>
+                    <p class="m-0 font-weight-bold"><a class="btn btn-success btn-sm" style="color: white;" data-toggle="modal" data-target="#homeBanner">Add New</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <!-- update -->
+                    <!-- <div class="export">
+                        <input type="button" class="dt-button buttons-copy buttons-html5" (click)="exportCsv('csvBtn')" value="CSV">
+                        <input type="button" class="dt-button buttons-copy buttons-html5" (click)="exportCsv('xlsxBtn')" value="EXCEL">
+                        <a class="btn btn-danger btn-sm" *ngIf="this.checkedList.length !== 0" (click)="delSelectedItem()"><i class="fa fa-trash white"> Delete Selected List</i></a>
+                    </div> -->
+                    <!-- update -->
+                    <table [dtOptions]="dtOptions" datatable class="table table-bordered" id="dataTable" width="100%">
+                        <thead>
+                            <tr>
+                                <!-- update -->
+                                <th class='notexport'>Check
+                                    <!-- <div class="form-check">
+                                        <label>
+                                            <input style="margin: -10px -18px" type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"/>
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div> -->
+                                </th>
+                                <!-- update -->
+                                <th>Category</th>
+                                <th hidden class='notexport'>ID</th>
+                                <th>Text</th>
+                                <th class='notexport'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of category; let j=index">
+                                <!-- update -->
+                                <td>
+                                    <!-- <div class="form-check">
+                                        <label>
+                                            <input style="margin: 0px -10px;" type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.id}}" (change)="isAllSelected()" >
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div> -->
+                                </td>
+                                <!-- update -->
+                                <td>
+                                    {{item.category}}
+                                </td>
+                                <td hidden>{{item.id}}</td>
+                                <td>{{item.content}}</td>
+                                <td>
+                                    <a class="btn btn-success btn-sm marginRight" style="color: white;" (click)="updateCategory(item.id, item.category,item.content)"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger btn-sm" style="color: white;" (click)="delCategory(item.id, j)"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6" *ngIf="brand">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Brands</h6>
+                    <p class="m-0 font-weight-bold"><a class="btn btn-success btn-sm" style="color: white;" data-toggle="modal" data-target="#sellnow">Add New</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <!-- update -->
+                    <!-- <div class="export">
+                        <input type="button" class="dt-button buttons-copy buttons-html5" (click)="exportBrandCsv('csvBtn')" value="CSV">
+                        <input type="button" class="dt-button buttons-copy buttons-html5" (click)="exportBrandCsv('xlsxBtn')" value="EXCEL">
+                        <a class="btn btn-danger btn-sm" *ngIf="this.checkedListBrand.length !== 0" (click)="delSelectedBrandItem()"><i class="fa fa-trash white"> Delete Selected List</i></a>
+                    </div> -->
+                    <!-- update -->
+                    <table [dtOptions]="dtOptionsBrand" datatable class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <!-- update -->
+                                <th class='notexport'>
+                                    Check
+                                </th>
+                                <!-- update -->
+                                <th>Category</th>
+                                <th class='notexport' hidden>ID</th>
+                                <th>Brand</th>
+                                <th class='notexport'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of brand; let j=index">
+                                <!-- update -->
+                                <td>
+
+                                </td>
+                                <!-- update -->
+                                <td>
+                                    {{item.categoriess?.category}}
+                                </td>
+                                <td hidden>{{item.id}}</td>
+
+                                <td>
+                                    {{item.model}}
+                                </td>
+                                <td>
+                                    <a class="btn btn-success btn-sm marginRight" style="color: white;" (click)="updateBrand(item.id,item.category_id,item.model)"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger btn-sm" style="color: white;" (click)="delBrand(item.id, j)"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Banner-->
+<div id="homeBanner" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Categories</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="categoryForm" (ngSubmit)="addCategory()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Category</label>
+                        <input class="form-control" type="text" formControlName="category">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Content</label>
+                        <angular-editor id="editor1" formControlName="content"></angular-editor>
+
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="categoryForm.invalid">Add Category</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal SellNow-->
+<div id="sellnow" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Brand</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="modelForm" (ngSubmit)="addBrand()">
+                    <div class="form-group">
+                        <label for="password-confirm">* Category</label>
+                        <select class="form-control" formControlName="category">
+                            <option *ngFor="let item of category" value="{{item.id}}">{{item.category}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Brand</label>
+                        <input class="form-control" type="text" formControlName="brand">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="modelForm.invalid">Add Brand</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modals -->
+<div id="delmainbanner" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Category</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteCategory()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delsellbanner" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Brand</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteBrand()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="updateCat" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Categories</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="categoryForm" (ngSubmit)="updateCat()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Category</label>
+                        <input class="form-control" type="text" formControlName="category">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Content</label>
+                        <angular-editor id="editor1" formControlName="content"></angular-editor>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="categoryForm.invalid">Update Category</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="updateBrand" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Brand</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="modelForm" (ngSubmit)="updateBra()">
+                    <div class="form-group">
+                        <label for="password-confirm">* Category</label>
+                        <select class="form-control" formControlName="category">
+                            <option *ngFor="let item of category" value="{{item.id}}">{{item.category}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Brand</label>
+                        <input class="form-control" type="text" formControlName="brand">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="modelForm.invalid">Update Brand</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>

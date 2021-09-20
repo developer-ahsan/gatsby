@@ -1,0 +1,318 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12" *ngIf="aboutOne">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">First Area</h6>
+                    <p class="m-0 font-weight-bold"><a class="btn btn-success btn-sm" style="color: white;" data-toggle="modal" data-target="#addAboutOne">Add New</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Heading</th>
+                                <th>Content</th>
+                                <th>Image1</th>
+                                <th>Image2</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of aboutOne; let j=index">
+                                <td>
+                                    {{item.heading}}
+                                </td>
+                                <td>
+                                    {{item.content}}
+                                </td>
+                                <td>
+                                    <img width="30px" src="{{api.imageUrl + item.image1}}" alt="" srcset="">
+                                </td>
+                                <td>
+                                    <img width="30px" src="{{api.imageUrl + item.image2}}" alt="" srcset="">
+
+                                </td>
+                                <td class="d-sm-flex justify-content">
+                                    <a class="btn btn-primary btn-sm marginRight" style="color: white;" (click)="updateAboutOne(item.id, j)"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger btn-sm" style="color: white;" (click)="delAboutOne(item.id)"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 col-lg-12" *ngIf="aboutTwo">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Second Area</h6>
+                    <p class="m-0 font-weight-bold"><a class="btn btn-success btn-sm" style="color: white;" data-toggle="modal" data-target="#addAboutTwo">Add New</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Heading</th>
+                                <th>Content</th>
+                                <th>Image1</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of aboutTwo; let j=index">
+                                <td>
+                                    {{item.heading}}
+                                </td>
+                                <td>
+                                    {{item.content}}
+                                </td>
+                                <td>
+                                    <img width="30px" src="{{api.imageUrl + item.image1}}" alt="" srcset="">
+
+                                </td>
+                                <td class="d-sm-flex justify-content">
+                                    <a class="btn btn-primary btn-sm marginRight" style="color: white;" (click)="updateAboutTwo(item.id,j)"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger btn-sm" style="color: white;" (click)="delAboutTwo(item.id)"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 col-lg-12" *ngIf="aboutThree">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Third Area</h6>
+                    <p class="m-0 font-weight-bold"><a class="btn btn-success btn-sm" style="color: white;" data-toggle="modal" data-target="#addAboutThree">Add New</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Heading</th>
+                                <th>Content</th>
+                                <th>Image1</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of aboutThree; let j=index">
+                                <td>
+                                    {{item.heading}}
+                                </td>
+                                <td>
+                                    {{item.content}}
+                                </td>
+                                <td>
+                                    <img width="30px" src="{{api.imageUrl + item.image1}}" alt="" srcset="">
+
+                                </td>
+                                <td class="d-sm-flex justify-content">
+                                    <a class="btn btn-primary btn-sm marginRight" style="color: white;" (click)="updateAboutThree(item.id,j)"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger btn-sm" style="color: white;" (click)="delAboutThree(item.id)"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Banner-->
+<div id="addAboutOne" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Area One</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addAboutOne" (ngSubmit)="addAboutOneSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Heading</label>
+                        <input class="form-control" type="text" formControlName="heading">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Content</label>
+                        <angular-editor id="editor1" formControlName="content"></angular-editor>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Image1</label>
+                        <input (change)="onFileChange($event, '1')" class="form-control" type="file" formControlName="image1">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Image2</label>
+                        <input (change)="onFileChange($event, '2')" class="form-control" type="file" formControlName="image2">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addAboutOne.invalid">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal SellNow-->
+<div id="addAboutTwo" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Area 2</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addAboutTwo" (ngSubmit)="addAboutTwoSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Heading</label>
+                        <input class="form-control" type="text" formControlName="heading">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Content</label>
+                        <angular-editor id="editor1" formControlName="content"></angular-editor>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Image1</label>
+                        <input (change)="onFileChange($event, '1')" class="form-control" type="file" formControlName="image1">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addAboutTwo.invalid">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="addAboutThree" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Area 3</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addAboutThree" (ngSubmit)="addAboutThreeSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Heading</label>
+                        <input class="form-control" type="text" formControlName="heading">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Content</label>
+                        <angular-editor id="editor1" formControlName="content"></angular-editor>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Image1</label>
+                        <input (change)="onFileChange($event, '1')" class="form-control" type="file" formControlName="image1">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addAboutThree.invalid">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update -->
+
+<div id="updateAboutOne" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Area One</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addAboutOne" (ngSubmit)="updateAboutOneSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Heading</label>
+                        <input class="form-control" type="text" formControlName="heading">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Content</label>
+                        <angular-editor id="editor1" formControlName="content"></angular-editor>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Image1</label>
+                        <input (change)="onFileChange($event, '1')" class="form-control" type="file" formControlName="image1">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Image2</label>
+                        <input (change)="onFileChange($event, '2')" class="form-control" type="file" formControlName="image2">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addAboutOne.invalid">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal SellNow-->
+<div id="updateAboutTwo" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Area 2</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addAboutTwo" (ngSubmit)="updateAboutTwoSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Heading</label>
+                        <input class="form-control" type="text" formControlName="heading">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Content</label>
+                        <angular-editor id="editor1" formControlName="content"></angular-editor>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Image1</label>
+                        <input (change)="onFileChange($event, '1')" class="form-control" type="file" formControlName="image1">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addAboutTwo.invalid">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="updateAboutThree" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Area 3</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addAboutThree" (ngSubmit)="updateAboutThreeSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Heading</label>
+                        <input class="form-control" type="text" formControlName="heading">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Content</label>
+                        <angular-editor id="editor1" formControlName="content"></angular-editor>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">* Image1</label>
+                        <input (change)="onFileChange($event, '1')" class="form-control" type="file" formControlName="image1">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addAboutThree.invalid">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner></ngx-spinner>

@@ -1,0 +1,153 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center">
+
+        <div class="sidebar-brand-text mx-3"><img src="./assets/admin/img/logo.svg" /></div>
+    </a>
+    <div *ngIf="isAdmin == 'customer'">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item" (click)="onclick()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            <a class="nav-link" [routerLink]="['/dashboard']">
+                <i><img class="imgSize" src="./assets/admin/img/dash.svg"/></i>
+                <span>Dashboard</span></a>
+        </li>
+        <!-- Nav Item - Charts -->
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['profile']">
+                <i><img class="imgSize" src="./assets/admin/img/profile.svg"/></i>
+                <span>My Profile</span></a>
+        </li>
+
+        <!-- Nav Item - Tables -->
+        <li class="nav-item" (click)="onclick()" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['mycollections']">
+                <i><i><img class="imgSize" src="./assets/admin/img/collection.svg"/></i></i>
+                <span>My Collection</span></a>
+        </li>
+
+        <!-- Nav Item - Tables -->
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['addprice']">
+                <i><i><img class="imgSize" src="./assets/admin/img/price.svg"/></i></i>
+                <span>Add a Price</span></a>
+        </li>
+        <!-- Nav Item - Tables -->
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['myratings']">
+                <i><i><img class="imgSize" src="./assets/admin/img/star.svg"/></i></i>
+                <span>My Ratings</span></a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['submitted-prices']">
+                <i><img class="imgSize" src="./assets/admin/img/collection.svg"/></i>
+                <span>View Prices Submitted</span></a>
+        </li>
+        <!-- Nav Item - Tables -->
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['accountsettings']">
+                <i><i><img class="imgSize" src="./assets/admin/img/settings.svg"/></i></i>
+                <span>Account Settings</span></a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+    </div>
+    <div *ngIf="isAdmin == 'admin'">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['/admin']">
+                <i><img class="imgSize" src="./assets/admin/img/dash.svg"/></i>
+                <span>Dashboard</span></a>
+        </li>
+        <!-- Nav Item - Charts -->
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['profile']">
+                <i><img class="imgSize" src="./assets/admin/img/profile.svg"/></i>
+                <span>My Profile</span></a>
+        </li>
+
+        <!-- Nav Item - Tables -->
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['submittedprices']">
+                <i><img class="imgSize" src="./assets/admin/img/collection.svg"/></i>
+                <span>View Prices Submitted</span></a>
+        </li>
+
+        <!-- Nav Item - Tables -->
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['requestedprices']">
+                <i><img class="imgSize" src="./assets/admin/img/price.svg"/></i>
+                <span>View Prices Requested</span></a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['members']">
+                <i><img class="imgSize" src="./assets/admin/img/users.svg"/></i>
+                <span>View Customers</span></a>
+        </li>
+        <!-- Nav Item - Tables -->
+        <!-- <li class="nav-item" routerLinkActive="active" >
+            <a class="nav-link" [routerLink]="['managemebers']">
+                <i><img class="imgSize" src="./assets/admin/img/price.svg"/></i>
+                <span>Manage Members</span></a>
+        </li> -->
+        <!-- Nav Item - Tables -->
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['manageratings']">
+                <i><img class="imgSize" src="./assets/admin/img/star.svg"/></i>
+                <span>View Product Ratings</span></a>
+        </li>
+        <!-- Nav Item - Tables -->
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['managestores']">
+                <i><img class="imgSize" src="./assets/admin/img/settings.svg"/></i>
+                <span>View Stores</span></a>
+        </li>
+
+
+        <!-- Nav Item - Tables -->
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['brandAndcategory']">
+                <i><img class="imgSize" src="./assets/admin/img/list.svg"/></i>
+                <span>Brands and Categories</span></a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['manageproducts']">
+                <i><img class="imgSize" src="./assets/admin/img/shipping.svg"/></i>
+                <span>Product Management</span></a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" (click)="onclick()">
+            <a class="nav-link" [routerLink]="['requestedcollection']">
+                <i><img class="imgSize" src="./assets/admin/img/collect.svg"/></i>
+                <span>Requested Collections</span></a>
+        </li>
+
+        <!-- Nav Item - Tables -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                <i><img class="imgSize" src="./assets/admin/img/administration.svg"/></i>
+                <span>Manage Content Pages</span>
+            </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Pages</h6>
+                    <a class="collapse-item" routerLinkActive="active" [routerLink]="['homepageContent']" (click)="onclick()">Home Page</a>
+                    <a class="collapse-item" routerLinkActive="active" [routerLink]="['aboutContent']" (click)="onclick()">About</a>
+                    <a class="collapse-item" routerLinkActive="active" [routerLink]="['footerContent']" (click)="onclick()">Footer</a>
+                    <a class="collapse-item" routerLinkActive="active" [routerLink]="['faqsContent']" (click)="onclick()">FAQs</a>
+                    <a class="collapse-item" routerLinkActive="active" [routerLink]="['newsletter']" (click)="onclick()">
+                        <span>Newsletters</span></a>
+                    <a class="collapse-item" routerLinkActive="active" [routerLink]="['contacts-request']" (click)="onclick()"><span>Contact Requests</span></a>
+                    <a class="collapse-item" routerLinkActive="active" [routerLink]="['privacy-policy']" (click)="onclick()">Privacy Policy</a>
+                </div>
+            </div>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+    </div>
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>
+<!-- End of Sidebar -->

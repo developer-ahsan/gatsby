@@ -1,0 +1,96 @@
+<div class="container-fluid">
+    <div class="row" *ngIf="submitted">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <!-- <div class="card-header text-small white"><a class="btn btn-success">Export to Excel</a></div> -->
+                <div class="card-body">
+                    <!-- update -->
+                    <!-- update -->
+                    <table datatable class="table table-bordered hover" id="dataTable" [dtOptions]="dtOptions" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <!-- update -->
+                                <th class='notexport'>
+                                    Check
+                                </th>
+                                <!-- update -->
+                                <th>Date Submitted</th>
+                                <th hidden class='notexport'>ID</th>
+                                <th>Image</th>
+                                <th>Submitted By</th>
+                                <th>Product Name</th>
+                                <th>Price Submitted</th>
+                                <th>MSRP</th>
+                                <th>MSRP Price Premium</th>
+                                <th>Store Name</th>
+                                <th>Store Address</th>
+                                <th class='notexport'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of submitted; let j=index">
+                                <!-- update -->
+                                <td></td>
+                                <!-- update -->
+                                <td>{{item.created_at | date:'MM-dd-yyyy'}}</td>
+                                <td hidden>{{item.id}}</td>
+                                <td>
+                                    <a href="javascript:void(0)" (click)="show(item.image)">
+                                        <img src="{{api.imageUrl + item.image}}" width="30px" alt="">
+                                    </a>
+                                </td>
+                                <td *ngIf="item.user">{{item.user?.f_name +' '+ item.user?.l_name}}</td>
+                                <td *ngIf="!item.user"></td>
+                                <td>{{item.model}}</td>
+                                <td>{{item.price_you_saw | currency}}</td>
+                                <td>{{item.msrp | currency}}</td>
+                                <td>{{msprPremium(item.price_you_saw,item.msrp)}}%</td>
+                                <td>{{item.store_name}}</td>
+                                <td>{{item.store_address}}</td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" (click)="delSubmitted(item.id, j)"><i class="fa fa-trash white"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- update -->
+<div id="delSubmitted" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Submitted Price</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteSubmitted()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- update -->
+<div [style.display]="showModal ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <a href="{{imgUrl}}" target="_blank"><img src="{{imgUrl}}" id="imagepreview" style="width: 50%;"></a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner></ngx-spinner>

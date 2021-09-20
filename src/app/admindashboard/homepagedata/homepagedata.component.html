@@ -1,0 +1,279 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6 col-lg-6" *ngIf="mainBanner">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Home Page Banner</h6>
+                    <p class="m-0 font-weight-bold"><a class="btn btn-success btn-sm" style="color: white;" data-toggle="modal" data-target="#homeBanner">Add New</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let banner of mainBanner">
+                                <td>
+                                    <img src="{{api.imageUrl + banner.image}}" width="100px">
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-switch" *ngIf="banner.status == 1">
+                                        <input type="checkbox" class="custom-control-input" checked id="customSwitches" (change)="updateStatusMain('false', banner.id)">
+                                        <label class="custom-control-label" for="customSwitches"></label>
+                                    </div>
+                                    <div class="custom-control custom-switch" *ngIf="banner.status == 0">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitches" (change)="updateStatusMain('true', banner.id)">
+                                        <label class="custom-control-label" for="customSwitches"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" style="color: white;" (click)="delMainBanner(banner.id)"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Look to Sell Collection</h6>
+                    <p class="m-0 font-weight-bold"><a class="btn btn-success btn-sm" style="color: white;" data-toggle="modal" data-target="#sellnow">Add New</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let banner of sellBanner">
+                                <td>
+                                    <img src="{{api.imageUrl + banner.image}}" width="100px">
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-switch" *ngIf="banner.status == 1">
+                                        <input type="checkbox" class="custom-control-input" checked id="customSwitches" (change)="updateStatusSell('', banner.id)">
+                                        <label class="custom-control-label" for="customSwitches"></label>
+                                    </div>
+                                    <div class="custom-control custom-switch" *ngIf="banner.status == 0">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitches" (change)="updateStatusSell('', banner.id)">
+                                        <label class="custom-control-label" for="customSwitches"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" (click)="delSellBanner(banner.id)" style="color: white;"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-success">Testimonials</h6>
+                    <p class="m-0 font-weight-bold"><a class="btn btn-success btn-sm" style="color: white;" data-toggle="modal" data-target="#testimonial">Add New</a></p>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Text</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let testimonial of testimonialsList; let j=index">
+                                <td>
+                                    <p>{{testimonial.text}}</p>
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-switch" *ngIf="testimonial.status == 1">
+                                        <input type="checkbox" class="custom-control-input" checked id="customSwitches" (change)="updateStatusTestimonial('', testimonial.id)">
+                                        <label class="custom-control-label" for="customSwitches"></label>
+                                    </div>
+                                    <div class="custom-control custom-switch" *ngIf="testimonial.status == 0">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitches" (change)="updateStatusTestimonial('', testimonial.id)">
+                                        <label class="custom-control-label" for="customSwitches"></label>
+                                    </div>
+                                </td>
+                                <td class="d-sm-flex justify-content">
+                                    <a class="btn btn-primary btn-sm" (click)="updateTestimonial(testimonial.id,j)" style="color: white;"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger btn-sm" (click)="delTestimonial(testimonial.id)" style="color: white;"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Banner-->
+<div id="homeBanner" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Main Banner</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addMainBanner" (ngSubmit)="addMainBannerSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Banner</label>
+                        <input class="form-control" (change)="onFileChange($event, 'plast')" type="file" formControlName="image">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addMainBanner.invalid">Add Banner</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal SellNow-->
+<div id="sellnow" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">SellNow Banner</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addSellBanner" (ngSubmit)="addSellBannerSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Banner</label>
+                        <input class="form-control" (change)="onFileChange($event, 'plast')" type="file" formControlName="image">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addSellBanner.invalid">Add Banner</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal SellNow-->
+<div id="testimonial" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Testimonial</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addTestimonial" (ngSubmit)="addTestimonialSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Testimonial</label>
+                        <textarea class="form-control" placeholder="What your Client Says" formControlName="text"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addTestimonial.invalid">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modals -->
+<div id="delmainbanner" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Banner</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteMainBanner()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="delsellbanner" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Banner</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleteSellBanner()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="deltestimonial" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Testimonial</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" (click)="deleTetestimonial()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Update -->
+<div id="updateTestimonial" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Testimonial</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="for-group" [formGroup]="addTestimonial" (ngSubmit)="updateTestimonialSubmit()">
+                    <div class="form-group">
+                        <label for="inputAddress">* Testimonial</label>
+                        <textarea class="form-control" placeholder="What your Client Says" formControlName="text"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="addTestimonial.invalid">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner></ngx-spinner>
