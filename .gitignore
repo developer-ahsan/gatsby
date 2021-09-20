@@ -42,19 +42,3 @@ testem.log
 /typings
 
 # System Files
-.DS_Store
-Thumbs.db
-*.json
-src/environments/environment.ts
-src/environments/environment.ts
-src/environments/environment.ts
-*.json
-src/environments/environment.ts
-src/app/services/api.service.ts
-src/main.ts
-src/app/services/api.service.ts
-src/main.ts
-src/app/services/api.service.ts
-src/app/services/api.service.ts
-src/main.ts
-src/app/services/api.service.ts
