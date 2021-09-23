@@ -23,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UiSwitchModule } from 'ngx-toggle-switch';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateformatPipe } from './pipes/dateformat.pipe';
+import { NgxAutocompleteModule } from 'ngx-angular-autocomplete';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,8 @@ import { DateformatPipe } from './pipes/dateformat.pipe';
     BrowserAnimationsModule,
     GooglePlaceModule,
     NgbModule,
+    NgxAutocompleteModule,
+
   ],
   providers: [
     NgxSpinnerService 

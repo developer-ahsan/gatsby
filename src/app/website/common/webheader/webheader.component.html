@@ -84,8 +84,39 @@
                         <li *ngIf="!checkLogin" ngcontent-dgd-c50="" routerlinkactive="active" class="nav-item d-block d-sm-none"><a data-toggle="modal" data-target="#sign-up" ngcontent-dgd-c50="" class="nav-link">Register</a></li>
 
                         <li *ngIf="checkLogin" ngcontent-dgd-c50="" routerlinkactive="active" class="nav-item d-block d-sm-none"><a ngcontent-dgd-c50="" class="nav-link" (click)="openDashboard()">Dashboard</a></li>
+                        
 
                     </ul>
+                  
+                        <div class="search mb-2 .d-sm-none .d-md-block">
+                            
+                                <div class="row justify-content-center">
+                                    <div class="col-md-7 dropdown" *ngIf="searchSelect=='name'" style="margin: 0px;padding: 0px; margin-top: 7px;">
+                                        <input type="text" autocomplete="off" name="das" [(value)]="productName" [(ngModel)]="ngSearch" data-toggle="dropdown" (keyup)="getSearchProducts($event.target.value)" class="form-control" placeholder="Search to find a price" aria-label="Search to find a price"
+                                            aria-describedby="button-addon2" style="width: 300px;">
+                                        <div class="dropdown-menu" [ngStyle]="{'height': searchProducts.length > 0 ? '100px' : 'auto','display': searchProducts.length > 0 ? 'block': 'none' }" style="background-color: white; width: 100%;height: 100px;overflow-y:auto; text-align: left;padding: 5px 10px;">
+                                            <a href="javascript:void(0)" class="dropdown-item" *ngFor="let item of searchProducts" (keyup)="getProductName(item.name)" (click)="setSearchValue(item.slug)" [routerLink]="['productdetails', item.cat_slug, item.slug]">{{item.brand}} {{item.name}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7" *ngIf="searchSelect=='ref'" style="margin: 0px;padding: 0px;">
+                                        <ngx-autocomplete style="width: 100%;padding: 0px !important;margin: 0px !important; float: left;" [searchKeyword]="'ref'" [inputId]="'searchEmployee'" [placeholderValue]="'Search by Reference Nu,er'" [entries]="category" (selectedValue)="selectEvent($event)">
+                                        </ngx-autocomplete>
+                                    </div>
+                                    <div class="col-md-7" *ngIf="searchSelect=='upc'" style="margin: 0px;padding: 0px;">
+                                        <ngx-autocomplete style="width: 100%;padding: 0px !important;margin: 0px !important; float: left;" [searchKeyword]="'upc'" [inputId]="'searchEmployee'" [placeholderValue]="'Search by UPC'" [entries]="brand" (selectedValue)="selectEvent($event)">
+                                        </ngx-autocomplete>
+                                    </div>
+                                    <div class="col-md-3 p-0 ml-4" >
+                                        <button (click)="searchProduct()" style="background-color: #0D5B31; height: 46px;margin-top: 7px; border: none; width: 80%;"  class="rounded-0 text-uppercase btn-sm" type="button" id="button-addon2"> 
+                                            <i class="fas fa-search" style="font-size: 25px;margin-top: 3px; color: aliceblue;" ></i></button>
+
+                                    </div>
+                                    <!-- style="width: 100%; background-color: #0D5B31; border: none;" -->
+
+                                </div>
+                            
+                        </div>
+                   
                 </div>
             </div>
         </nav>
@@ -113,7 +144,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="sign-inLabel">Create Your Account In The Gatsby Guide</h5>
+                <h5 class="modal-title" id="sign-inLabel">Create Your Account For The Gatsby Guide</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -147,15 +178,15 @@
                         </div>
                         <div class="form-group form-check">
                             <input type="checkbox" class="form-check-input" id="remeber">
-                            <label class="form-check-label" for="remeber">I agree <a href="#">terms & Condtions</a></label>
+                            <label class="form-check-label" for="remeber">I agree to the <a href="#">terms & Condtions</a></label>
                         </div>
                         <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary btn-lg btn-block">Register Your Account</button>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <p>Already have an account? <a (click)="openmodel('in')">Log in here</a></p>
-                <p>By signing up with The Gatsby Guide you agree with <a data-dismiss="modal" [routerLink]="['/privacy-policy']">our Terms</a> of Use and <a data-dismiss="modal" [routerLink]="['/privacy-policy']">Privacy Policy.</a></p>
+                <p>Already have an account? <a (click)="openmodel('in')" style="color: #0D5B31;;">Log in here</a></p>
+                <p>By signing up with The Gatsby Guide you agree with <a data-dismiss="modal" [routerLink]="['/service-terms']">Service Terms</a> of Use and <a data-dismiss="modal" [routerLink]="['/privacy-policy']">Privacy Policy.</a></p>
             </div>
         </div>
     </div>
@@ -165,7 +196,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="sign-inLabel">Sign In The Gatsby Guide</h5>
+                <h5 class="modal-title" id="sign-inLabel">Sign In to The Gatsby Guide</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -188,8 +219,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <p>Forget Password? <a (click)="openmodel('forget')">Reset your password here</a></p>
-                <p>Don't have an account? <a (click)="openmodel('up')">Create your account here</a></p>
+                <p>Forget Password? <a (click)="openmodel('forget')" style="color: #0D5B31;">Reset your password here</a></p>
+                <p>Don't have an account? <a (click)="openmodel('up')" style="color: #0D5B31;">Create your account here</a></p>
             </div>
         </div>
     </div>
@@ -233,7 +264,7 @@
             <span aria-hidden="true">×</span>
           </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-body">Select <b>"Logout"</b> below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <a class="btn btn-primary" (click)="logout()">Logout</a>

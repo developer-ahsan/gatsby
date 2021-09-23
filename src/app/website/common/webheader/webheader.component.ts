@@ -5,6 +5,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+import { Address } from 'ngx-google-places-autocomplete/objects/address';
 declare var jQuery:any;
 
 @Component({
@@ -13,9 +15,23 @@ declare var jQuery:any;
   styleUrls: ['./webheader.component.css']
 })
 export class WebheaderComponent implements OnInit {
+  searchSelect = 'name';
+  banners: any;
+  sell: any;
+  productName: '';
+  testimonial: any;
+  range = []
+  @ViewChild('placessRef', {static: true}) placesRef: GooglePlaceDirective;
   @ViewChild('navbarToggler') navbarToggler:ElementRef;
-  mobileSearch = 0;
+  sellCollectionForm: FormGroup;
+  products: any;
+  // searchProducts: any = [];
   ngSearch = '';
+  category: any;
+  brand: any;
+  searchValue: any = '';
+  mobileSearch = 0;
+  // ngSearch = '';
   
   loginForm: FormGroup;
   resetForm: FormGroup;
@@ -23,16 +39,25 @@ export class WebheaderComponent implements OnInit {
   checkLogin = Boolean(localStorage.getItem('isAdmin'));
   categories: any;
   searchProducts: any = [];
+  allProducts: any;
   constructor(
     public api: ApiService,
     public Auth: AuthService,
     public spinner: NgxSpinnerService,
     public toastr: ToastrService,
     public router: Router,
+    
+    
   ) {
    }
 
   ngOnInit(): void {
+    this.getProducts();
+    this.getHome();
+    this.initialize();
+    
+    this.getCategory();
+    this.getBrand();
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -49,6 +74,37 @@ export class WebheaderComponent implements OnInit {
       c_password: new FormControl('', [Validators.required])
     });
     this.getCategories();
+  }
+  getProducts() {
+    this.api.get('homeProduct').subscribe((data) => {
+      this.products = data.products;
+      this.allProducts = data.allPro;
+    })
+  }
+  getCategory() {
+    this.spinner.show();
+    this.api.get('getCategory').subscribe((data) => {
+      this.spinner.hide();
+      if(data.success) {
+        this.category = data.category;
+      }
+    })
+  }
+  getBrand() {
+    this.api.get('getModel').subscribe((data) => {
+      if(data.success) {
+        this.brand = data.brand;
+      }
+    })
+  }
+  getHome() {
+    this.spinner.show();
+    this.api.get('getWebsiteHome').subscribe((data) => {{
+      this.spinner.hide();
+      this.banners = data.data.main;
+      this.sell = data.data.sell;
+      this.testimonial = data.data.testimonial;
+    }})
   }
   get f() { return this.loginForm.controls; }
   passwordReset() {
@@ -176,6 +232,7 @@ export class WebheaderComponent implements OnInit {
   getSearchProducts(term) {
     if (term.length > 2) {
       this.ngSearch = term;
+      this.searchValue = term;
       this.api.get('searchProduct/'+term).subscribe(data => {
         console.log(data)
         if(data.product) {
@@ -188,7 +245,55 @@ export class WebheaderComponent implements OnInit {
     }
   }
   getProductName(name) {
+    this.productName = name;
     this.ngSearch = ''
     this.mobileSearch = 0;
   }
+  selectEvent(event) {
+    console.log(event)
+    if(this.searchSelect == 'name') {
+      this.ngSearch = event.name;
+    } else if(this.searchSelect == 'ref') {
+      this.ngSearch = event.ref
+    } else {
+      this.ngSearch = event.upc
+    }
+ }
+ searchProduct() {
+  if(this.ngSearch == '') {
+    this.toastr.warning('Please enter search term');
+  } else {
+    console.log('here');
+    this.router.navigateByUrl('/searchproduct/'+this.ngSearch)
+  }
+}
+setSearchValue(value) {
+  this.ngSearch = value;
+  this.searchValue = '';
+}
+filterProduct(event) {
+  this.ngSearch == event.target.value;
+  this.searchValue = event.target.value;
+  this.searchProducts = this.allProducts.filter(task =>
+    task.name.toLowerCase().includes(event.target.value) ||
+    task.category.toLowerCase().includes(event.target.value) ||
+    task.brand.toLowerCase().includes(event.target.value));
+}
+initialize() {
+  this.sellCollectionForm = new FormGroup({
+    f_name: new FormControl('', [Validators.required]),
+    l_name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    phone: new FormControl(''),
+    category: new FormControl(''),
+    brand: new FormControl(''),
+    model: new FormControl('', [Validators.required]),
+    year: new FormControl(''),
+    upc: new FormControl(''),
+    value: new FormControl(''),
+    location: new FormControl(''),
+    detail: new FormControl(''),
+    quantity: new FormControl('', [Validators.required]),
+  });
+}
 }

@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  imgUrl: 'http://192.168.241.1/gatsbybackend/',
-  apiUrl: 'http://192.168.241.1/gatsbybackend/public/api/',
-//   imgUrl: 'https://thegatsbyguide.com/gatsbybackend/',
-//  apiUrl: 'https://thegatsbyguide.com/gatsbybackend/public/api/',
+  // imgUrl: 'http://192.168.241.1/gatsbybackend/',
+  // apiUrl: 'http://192.168.241.1/gatsbybackend/public/api/',
+  imgUrl: 'https://thegatsbyguide.com/gatsbybackend/',
+ apiUrl: 'https://thegatsbyguide.com/gatsbybackend/public/api/',
 };
 
 /*

@@ -26,6 +26,7 @@ import {Ng2TelInputModule} from 'ng2-tel-input';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { PrivacyComponent } from './privacy/privacy.component';
+import { ServisTermsComponent } from './servis-terms/servis-terms.component';
 
 const routes: Routes = [
   {
@@ -84,12 +85,16 @@ const routes: Routes = [
         path: 'privacy-policy',
         component: PrivacyComponent,
       },
+      {
+        path: 'service-terms',
+        component: ServisTermsComponent,
+      },
     ]
   }
 ];
 
 @NgModule({
-  declarations: [HomeComponent, LoginComponent, RegisterComponent, ResetpassComponent, SidebarComponent, AboutusComponent, FaqsComponent, SubmitpriceComponent, RequestpriceComponent, ProductsComponent, ContactusComponent, ProductdetailsComponent, SearchpageComponent, ResetpasswordComponent, PrivacyComponent],
+  declarations: [HomeComponent, LoginComponent, RegisterComponent, ResetpassComponent, SidebarComponent, AboutusComponent, FaqsComponent, SubmitpriceComponent, RequestpriceComponent, ProductsComponent, ContactusComponent, ProductdetailsComponent, SearchpageComponent, ResetpasswordComponent, PrivacyComponent, ServisTermsComponent],
   imports: [
     CommonModule,
     FormsModule,

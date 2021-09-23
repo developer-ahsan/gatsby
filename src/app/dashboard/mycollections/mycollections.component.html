@@ -10,7 +10,7 @@
                                 <th>Category</th>
                                 <th>Brand</th>
                                 <th class='notexport'>Product Detail</th>
-                                <th>Product Name</th>
+                                <th style="min-width: 415px !important;">Product Name</th>
                                 <th>#Ref</th>
                                 <th>UPC</th>
                                 <th>Year</th>
@@ -26,7 +26,7 @@
                             <tr *ngFor="let item of collections; let j = index">
                                 <td>{{item.product.category}}</td>
                                 <td>{{item.product.brand}}</td>
-                                <td>
+                                <td >
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         {{item.product.name}}
                                     </a>
@@ -36,7 +36,7 @@
                                         <a class="dropdown-item" (click)="getSubmitReviewModal(j, item.rating.length)">Submit a Review</a>
                                     </div>
                                 </td>
-                                <td>
+                                <td >
 
                                     {{item.product.name}}
                                 </td>
